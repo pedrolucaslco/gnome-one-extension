@@ -31,5 +31,30 @@
       <summary>Center Window Shortcut</summary>
       <description>Key combination to center and resize the window.</description>
     </key>
+    <key name="rounded-corners-enabled" type="b">
+      <default>false</default>
+      <summary>Enable Rounded Corners</summary>
+      <description>Apply rounded corners to windows.</description>
+    </key>
+    <key name="rounded-corners-radius" type="i">
+      <default>12</default>
+      <summary>Corner Radius</summary>
+      <description>Radius of the rounded corners in pixels.</description>
+    </key>
+    <key name="rounded-corners-smoothing" type="d">
+      <default>0.0</default>
+      <summary>Corner Smoothing</summary>
+      <description>Smoothing factor (0=circle, 1=squircle).</description>
+    </key>
+    <key name="skip-libadwaita" type="b">
+      <default>true</default>
+      <summary>Skip Libadwaita Apps</summary>
+      <description>Do not apply rounded corners to libadwaita apps.</description>
+    </key>
+    <key name="skip-libhandy" type="b">
+      <default>true</default>
+      <summary>Skip Libhandy Apps</summary>
+      <description>Do not apply rounded corners to libhandy apps.</description>
+    </key>
   </schema>
 </schemalist>

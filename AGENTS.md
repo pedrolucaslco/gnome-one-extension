@@ -9,7 +9,8 @@ Múltiplas ferramentas integradas em uma única extensão modular.
 
 | Versão | Módulo | Status |
 |--------|--------|--------|
-| v0.1.0 | Window Centering | ✅ Implementado |
+| v1.0.0 | Window Centering | ✅ Implementado |
+| v1.1.0 | Rounded Corners | ✅ Implementado |
 | — | Clipboard History | 🔜 Planejado |
 | — | RAM Monitor | 🔜 Planejado |
 | — | Clock/Timer | 🔜 Planejado |
@@ -90,6 +91,8 @@ Historico de versoes mantido no CHANGELOG.md.
 lib/
 ├── keybindingManager.js   # Gerenciamento compartilhado de atalhos
 ├── windowCentering.js     # Modulo: centralizacao de janelas
+├── roundedCorners.js      # Modulo: manager de arredondamento
+├── roundedCornersEffect.js # Modulo: GLSL shader de arredondamento
 ├── clipboardHistory.js    # (futuro) Modulo: historico de clipboard
 ├── ramMonitor.js          # (futuro) Modulo: monitor de RAM
 └── ...

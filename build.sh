@@ -16,6 +16,8 @@ cp "$SCRIPT_DIR/metadata.json" "$DEST_DIR/"
 cp "$SCRIPT_DIR/lib/keybindingManager.js" "$DEST_DIR/lib/"
 cp "$SCRIPT_DIR/lib/windowCentering.js" "$DEST_DIR/lib/"
 cp "$SCRIPT_DIR/lib/indicator.js" "$DEST_DIR/lib/"
+cp "$SCRIPT_DIR/lib/roundedCorners.js" "$DEST_DIR/lib/"
+cp "$SCRIPT_DIR/lib/roundedCornersEffect.js" "$DEST_DIR/lib/"
 cp "$SCRIPT_DIR/schemas/org.gnome.shell.extensions.one-extension.gschema.xml" "$DEST_DIR/schemas/"
 
 echo "Compilando schemas..."

@@ -5,6 +5,17 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2025-07-10
+
+### Adicionado
+
+- **Rounded Corners**: aplica bordas arredondadas em todas as janelas
+  - Ativação/desativação por toggle nas preferências
+  - Raio de borda configurável (1-100 pixels)
+  - Skip automático para janelas maximizadas
+  - Skip para apps libadwaita e libhandy (configurável)
+- Aba "Rounded Corners" na janela de preferências
+
 ## [1.0.0] - 2025-07-10
 
 ### Adicionado

@@ -49,6 +49,34 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             description: _("Key combination to center and resize the window."),
             settingKey: 'centering-keybinding'
         });
+
+        const rcGroup = new Adw.PreferencesGroup({ title: _("Rounded Corners") });
+        page.add(rcGroup);
+
+        this._addSwitch(rcGroup, settings, {
+            title: _("Enable Rounded Corners"),
+            description: _("Apply rounded corners to windows."),
+            settingKey: 'rounded-corners-enabled'
+        });
+
+        this._addNumericInput(rcGroup, settings, {
+            title: _("Corner Radius"),
+            description: _("Radius of the rounded corners in pixels."),
+            settingKey: 'rounded-corners-radius',
+            range: { lower: 1, upper: 100 }
+        });
+
+        this._addSwitch(rcGroup, settings, {
+            title: _("Skip Libadwaita Apps"),
+            description: _("Do not apply rounded corners to libadwaita apps."),
+            settingKey: 'skip-libadwaita'
+        });
+
+        this._addSwitch(rcGroup, settings, {
+            title: _("Skip Libhandy Apps"),
+            description: _("Do not apply rounded corners to libhandy apps."),
+            settingKey: 'skip-libhandy'
+        });
     }
 
     _addSwitch(group, settings, { title, description, settingKey }) {
