@@ -13,6 +13,18 @@
 | Bounds computation | `lib/roundedCorners.js` | Cálculo de bordas |
 | Skip libadwaita/libhandy | `lib/roundedCorners.js` | Detecção de app type |
 
+### Cronomix (zagortenay333/cronomix)
+- **Licença:** MIT
+- **URL:** https://github.com/zagortenay333/cronomix
+- **Funções adaptadas:**
+
+| Conceito Original | Nosso Arquivo | Descrição |
+|---|---|---|
+| StopwatchApplet (timer logic) | `lib/stopwatch.js` | Lógica do cronômetro |
+| Time class (formatting) | `lib/stopwatch.js` | Formatação HH:MM:SS.cc |
+| State machine | `lib/stopwatch.js` | RUNNING/PAUSED/RESET |
+| Lap tracking | `lib/stopwatch.js` | Registro de voltas |
+
 ### Window Centering (niam0t/window-centering)
 - **Licença:** GPL-2.0
 - **URL:** https://github.com/niam0t/window-centering

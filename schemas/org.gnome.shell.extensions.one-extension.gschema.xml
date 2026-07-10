@@ -56,5 +56,10 @@
       <summary>Skip Libhandy Apps</summary>
       <description>Do not apply rounded corners to libhandy apps.</description>
     </key>
+    <key name="stopwatch-enabled" type="b">
+      <default>true</default>
+      <summary>Enable Stopwatch</summary>
+      <description>Show the stopwatch in the panel menu.</description>
+    </key>
   </schema>
 </schemalist>

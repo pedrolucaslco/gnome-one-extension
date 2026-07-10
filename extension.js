@@ -5,6 +5,7 @@ import { WindowCentering } from './lib/windowCentering.js';
 import { KeybindingManager } from './lib/keybindingManager.js';
 import { Indicator } from './lib/indicator.js';
 import { RoundedCorners } from './lib/roundedCorners.js';
+import { Stopwatch } from './lib/stopwatch.js';
 
 export default class OneExtension extends Extension {
     enable() {
@@ -23,9 +24,25 @@ export default class OneExtension extends Extension {
 
         this._roundedCorners = new RoundedCorners(this._settings);
         this._roundedCorners.enable();
+
+        if (this._settings.get_boolean('stopwatch-enabled')) {
+            this._startStopwatch();
+        }
+
+        this._settings.connect('changed::stopwatch-enabled', () => {
+            if (this._settings.get_boolean('stopwatch-enabled')) {
+                this._startStopwatch();
+            } else {
+                this._stopStopwatch();
+            }
+        });
+
+        this._indicator.setupSettings();
     }
 
     disable() {
+        this._stopStopwatch();
+
         this._roundedCorners?.disable();
         this._roundedCorners = null;
 
@@ -36,5 +53,18 @@ export default class OneExtension extends Extension {
         this._keybindingManager = null;
         this._windowCentering = null;
         this._settings = null;
+    }
+
+    _startStopwatch() {
+        if (this._stopwatch) return;
+        this._stopwatch = new Stopwatch();
+        this._stopwatch.enable();
+        this._indicator.setupStopwatch(this._stopwatch);
+    }
+
+    _stopStopwatch() {
+        if (!this._stopwatch) return;
+        this._stopwatch.disable();
+        this._stopwatch = null;
     }
 }

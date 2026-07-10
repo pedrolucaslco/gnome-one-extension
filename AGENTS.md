@@ -11,9 +11,9 @@ Múltiplas ferramentas integradas em uma única extensão modular.
 |--------|--------|--------|
 | v1.0.0 | Window Centering | ✅ Implementado |
 | v1.1.0 | Rounded Corners | ✅ Implementado |
+| v1.2.0 | Stopwatch | ✅ Implementado |
 | — | Clipboard History | 🔜 Planejado |
 | — | RAM Monitor | 🔜 Planejado |
-| — | Clock/Timer | 🔜 Planejado |
 | — | Tiling Manager | 🔜 Planejado |
 
 ## Convenções de Commit
@@ -93,6 +93,7 @@ lib/
 ├── windowCentering.js     # Modulo: centralizacao de janelas
 ├── roundedCorners.js      # Modulo: manager de arredondamento
 ├── roundedCornersEffect.js # Modulo: GLSL shader de arredondamento
+├── stopwatch.js           # Modulo: cronometro
 ├── clipboardHistory.js    # (futuro) Modulo: historico de clipboard
 ├── ramMonitor.js          # (futuro) Modulo: monitor de RAM
 └── ...

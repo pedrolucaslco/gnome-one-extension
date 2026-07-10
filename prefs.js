@@ -84,6 +84,15 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             description: _("Do not apply rounded corners to libhandy apps."),
             settingKey: 'skip-libhandy'
         });
+
+        const swGroup = new Adw.PreferencesGroup({ title: _("Stopwatch") });
+        page.add(swGroup);
+
+        this._addSwitch(swGroup, settings, {
+            title: _("Enable Stopwatch"),
+            description: _("Show the stopwatch in the panel menu."),
+            settingKey: 'stopwatch-enabled'
+        });
     }
 
     _addSwitch(group, settings, { title, description, settingKey }) {
