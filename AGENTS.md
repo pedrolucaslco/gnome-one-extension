@@ -32,6 +32,47 @@ fix: window centering on multi-monitor setup
 chore: update README with install instructions
 ```
 
+## Fluxo de Commits
+
+Cada commit deve ser gerado dinamicamente pela IA, seguindo estas regras:
+
+### Message (conventional commit)
+
+Formato: `tipo: descrição curta em lowercase`
+
+Exemplos:
+- `feat: add clipboard history`
+- `fix: window centering on multi-monitor`
+- `chore: update build script`
+
+### Description (impacto ao usuário)
+
+2-3 bullets curtos explicando o que mudou para o usuário:
+
+```
+- Histórico de clipboard com busca por texto
+- Cola itens antigos com um único clique
+- Remove necessidade de extensões separadas
+```
+
+### Regras
+
+1. Message: sempre `tipo: descrição curta` em lowercase
+2. Description: 2-3 bullets curtos, impacto ao usuário
+3. Tipos permitidos: `feat`, `fix`, `chore`, `refactor`, `style`
+4. Versionamento automático baseado na última tag:
+
+| Tipo | Bump | Exemplo |
+|------|------|---------|
+| `feat` | minor | v1.0.0 → v1.1.0 |
+| `fix` | patch | v1.0.0 → v1.0.1 |
+| `chore` | patch | v1.0.0 → v1.0.1 |
+| `refactor` | patch | v1.0.0 → v1.0.1 |
+| `style` | patch | v1.0.0 → v1.0.1 |
+| BREAKING CHANGE | major | v1.0.0 → v2.0.0 |
+
+5. Após o commit, criar tag anotada com a versão
+
 ## Versionamento
 
 Semântico: `MAJOR.MINOR.PATCH`
@@ -40,8 +81,8 @@ Semântico: `MAJOR.MINOR.PATCH`
 - **MINOR** — nova funcionalidade retrocompativel
 - **PATCH** — correcao de bug
 
-Tags criadas **on-demand** quando solicitado.
-Historico de versoes mantido no README.md.
+Tags criadas **automaticamente** a cada commit via fluxo de commits.
+Historico de versoes mantido no CHANGELOG.md.
 
 ## Estrutura Modular
 
