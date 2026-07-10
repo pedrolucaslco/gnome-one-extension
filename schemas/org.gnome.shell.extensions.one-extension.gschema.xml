@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.one-extension" path="/org/gnome/shell/extensions/one-extension/">
+    <key name="frame-width" type="i">
+      <default>86</default>
+      <summary>Window Width Percentage</summary>
+      <description>Percentage of screen width the window will occupy.</description>
+    </key>
+    <key name="frame-height" type="i">
+      <default>90</default>
+      <summary>Window Height Percentage</summary>
+      <description>Percentage of screen height the window will occupy.</description>
+    </key>
+    <key name="allow-forced-resize" type="b">
+      <default>false</default>
+      <summary>Allow Forced Resize</summary>
+      <description>Allows forced resizing even if the window is maximized.</description>
+    </key>
+    <key name="change-position" type="b">
+      <default>true</default>
+      <summary>Change Position</summary>
+      <description>Whether to center the window on the screen.</description>
+    </key>
+    <key name="change-size" type="b">
+      <default>true</default>
+      <summary>Change Size</summary>
+      <description>Whether to resize the window.</description>
+    </key>
+    <key name="centering-keybinding" type="as">
+      <default><![CDATA[['<Alt><Shift>A']]]></default>
+      <summary>Center Window Shortcut</summary>
+      <description>Key combination to center and resize the window.</description>
+    </key>
+  </schema>
+</schemalist>
