@@ -37,7 +37,7 @@
       <description>Apply rounded corners to windows.</description>
     </key>
     <key name="rounded-corners-radius" type="i">
-      <default>12</default>
+      <default>15</default>
       <summary>Corner Radius</summary>
       <description>Radius of the rounded corners in pixels.</description>
     </key>
@@ -52,7 +52,7 @@
       <description>Do not apply rounded corners to libadwaita apps.</description>
     </key>
     <key name="skip-libhandy" type="b">
-      <default>true</default>
+      <default>false</default>
       <summary>Skip Libhandy Apps</summary>
       <description>Do not apply rounded corners to libhandy apps.</description>
     </key>

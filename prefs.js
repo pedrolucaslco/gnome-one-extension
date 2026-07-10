@@ -66,6 +66,13 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             range: { lower: 1, upper: 100 }
         });
 
+        this._addFloatInput(rcGroup, settings, {
+            title: _("Smoothing"),
+            description: _("Corner shape (0 = circle, 1 = squircle)."),
+            settingKey: 'rounded-corners-smoothing',
+            range: { lower: 0.0, upper: 1.0 }
+        });
+
         this._addSwitch(rcGroup, settings, {
             title: _("Skip Libadwaita Apps"),
             description: _("Do not apply rounded corners to libadwaita apps."),
@@ -118,6 +125,34 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
 
         spinButton.connect('value-changed', (widget) => {
             settings.set_int(settingKey, widget.get_value());
+        });
+
+        row.add_suffix(spinButton);
+        group.add(row);
+    }
+
+    _addFloatInput(group, settings, { title, description, settingKey, range }) {
+        const row = new Adw.ActionRow({
+            title,
+            subtitle: description
+        });
+
+        const spinButton = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({
+                lower: range.lower,
+                upper: range.upper,
+                step_increment: 0.1,
+                page_increment: 0.1,
+                value: settings.get_double(settingKey)
+            }),
+            digits: 1,
+            numeric: true,
+            valign: Gtk.Align.CENTER,
+            width_chars: 4
+        });
+
+        spinButton.connect('value-changed', (widget) => {
+            settings.set_double(settingKey, widget.get_value());
         });
 
         row.add_suffix(spinButton);
