@@ -65,6 +65,7 @@ export default class OneExtension extends Extension {
     _stopStopwatch() {
         if (!this._stopwatch) return;
         this._stopwatch.disable();
+        this._stopwatch.destroy();
         this._stopwatch = null;
     }
 }

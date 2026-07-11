@@ -1,0 +1,79 @@
+/* ==========================================================================
+ * One Extension - Adapted from cronomix dark.css
+ *
+ * Variables:
+ * blue          #3584e4
+ * padding       8px
+ * spacing       8px
+ * border-radius 10px
+ * light_bg      rgba(255, 255, 255, .08)
+ * ========================================================================== */
+
+/* ==========================================================================
+ * Utility classes
+ * ========================================================================== */
+.one-extension-spacing { spacing: 10px; }
+
+/* ==========================================================================
+ * Popup menu
+ * ========================================================================== */
+.one-extension-menu {
+    min-width: 256px;
+    padding: 10px;
+}
+
+/* ==========================================================================
+ * Button
+ * ========================================================================== */
+.one-extension-button {
+    spacing: 2px;
+    padding: 6px;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, .08);
+}
+
+.one-extension-button:focus,
+.one-extension-button:hover {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+.one-extension-button StLabel {
+    text-align: center;
+    font-weight: bold;
+}
+
+.one-extension-button StIcon {
+    icon-size: 16px;
+    -st-icon-style: symbolic;
+}
+
+/* ==========================================================================
+ * Button box
+ * ========================================================================== */
+.one-extension-button-box {
+    spacing: 1px;
+}
+
+.one-extension-button-box .one-extension-button {
+    border-radius: 0;
+}
+
+.one-extension-button-box .one-extension-button:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.one-extension-button-box .one-extension-button:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+.one-extension-button-box .one-extension-button:first-child:last-child {
+    border-radius: 10px;
+}
+
+/* ==========================================================================
+ * Scrollbox
+ * ========================================================================== */
+.one-extension-scrollbox > StScrollBar {
+    padding-left: 6px;
+}
