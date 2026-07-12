@@ -8,11 +8,13 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 echo "Copiando arquivos para $DEST_DIR..."
 mkdir -p "$DEST_DIR/lib"
+mkdir -p "$DEST_DIR/lib/icons"
 mkdir -p "$DEST_DIR/schemas"
 
 cp "$SCRIPT_DIR/extension.js" "$DEST_DIR/"
 cp "$SCRIPT_DIR/prefs.js" "$DEST_DIR/"
 cp "$SCRIPT_DIR/metadata.json" "$DEST_DIR/"
+cp "$SCRIPT_DIR/stylesheet.css" "$DEST_DIR/"
 cp -r "$SCRIPT_DIR/lib/"* "$DEST_DIR/lib/"
 cp "$SCRIPT_DIR/schemas/org.gnome.shell.extensions.one-extension.gschema.xml" "$DEST_DIR/schemas/"
 

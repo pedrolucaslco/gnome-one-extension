@@ -21,9 +21,11 @@
 | Módulo | Descrição | Status |
 |--------|-----------|--------|
 | **Window Centering** | Centraliza e redimensiona janelas com atalho | ✅ `v1.0.0` |
+| **Rounded Corners** | Arredondamento de cantos com shader GLSL | ✅ `v1.1.0` |
+| **Stopwatch** | Cronômetro com interface no painel | ✅ `v1.2.0` |
+| **System Monitor** | Indicadores de CPU, RAM e Disco | ✅ `v1.3.0` |
 | Clipboard History | Histórico de clipboard | 🔜 Planejado |
-| RAM Monitor | Monitor de memória RAM | 🔜 Planejado |
-| Clock/Timer | Relógio e timer | 🔜 Planejado |
+| RAM Monitor (bar) | Monitor de memória RAM em barra | 🔜 Planejado |
 | Tiling Manager | Gerenciador de janelas | 🔜 Planejado |
 
 ## Window Centering
@@ -91,6 +93,7 @@ gnome-one-extension/
 ├── extension.js            # Entry point
 ├── prefs.js                # UI de preferências (Adw/Gtk)
 ├── metadata.json           # Metadados da extensão
+├── stylesheet.css          # Estilos CSS
 ├── build.sh                # Script de instalação
 ├── dev.sh                  # Script de desenvolvimento (nested)
 ├── schemas/
@@ -98,16 +101,28 @@ gnome-one-extension/
 └── lib/
     ├── indicator.js         # Ícone na top bar + menu
     ├── keybindingManager.js # Gerenciamento de atalhos
-    └── windowCentering.js   # Módulo: centralização
+    ├── windowCentering.js   # Módulo: centralização
+    ├── roundedCorners.js    # Módulo: arredondamento de cantos
+    ├── roundedCornersEffect.js # Shader GLSL de arredondamento
+    ├── stopwatch.js         # Módulo: cronômetro
+    ├── systemMonitor.js     # Módulo: monitor de sistema (CPU/RAM/Disk)
+    ├── icons/               # Ícones SVG customizados
+    ├── utils/
+    │   ├── button.js        # Componente Button/ButtonBox
+    │   ├── circularIndicator.js # Widget de indicador circular
+    │   └── pubsub.js        # Sistema de eventos PubSub
+    └── views/
+        └── stopwatchView.js # View do cronômetro
 ```
 
 ## Roadmap
 
+- [x] Window Centering (v1.0.0)
+- [x] Rounded Corners (v1.1.0)
+- [x] Stopwatch (v1.2.0)
+- [x] System Monitor (v1.3.0)
 - [ ] Clipboard History
-- [ ] RAM Monitor
-- [ ] Clock/Timer
 - [ ] Tiling Manager
-- [ ] Configuração de atalhos globais
 
 ## Changelog
 

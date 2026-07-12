@@ -2,7 +2,6 @@
 
 set -e
 
-RESOLUTION="${1:-1280x720}"
 EXTENSION_UUID="one-extension@pedrolucaslco"
 
 # Build e instala a extensão
@@ -11,7 +10,6 @@ echo "=== Instalando extensão ==="
 
 echo ""
 echo "=== Iniciando GNOME Shell aninhado (Wayland) ==="
-echo "Resolução: $RESOLUTION"
 echo ""
 echo "Para sair: Ctrl+C ou feche a janela"
 echo ""

@@ -23,7 +23,6 @@
 | StopwatchApplet (timer logic) | `lib/stopwatch.js` | Lógica do cronômetro |
 | Time class (formatting) | `lib/stopwatch.js` | Formatação HH:MM:SS.cc |
 | State machine | `lib/stopwatch.js` | RUNNING/PAUSED/RESET |
-| Lap tracking | `lib/stopwatch.js` | Registro de voltas |
 
 ### Window Centering (niam0t/window-centering)
 - **Licença:** GPL-2.0
@@ -60,5 +59,5 @@
   - Window Manager — ✅ implementado (v1.0.0)
   - Rounded Corners — ✅ implementado (v1.1.0)
   - Clipboard History — 🔜 planejado
-  - System Monitoring — 🔜 planejado
+  - System Monitoring — ✅ implementado (v1.3.0)
   - Disk Clean — 🔜 planejado

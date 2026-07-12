@@ -6,10 +6,12 @@ import { KeybindingManager } from './lib/keybindingManager.js';
 import { Indicator } from './lib/indicator.js';
 import { RoundedCorners } from './lib/roundedCorners.js';
 import { Stopwatch } from './lib/stopwatch.js';
+import { SystemMonitor } from './lib/systemMonitor.js';
 
 export default class OneExtension extends Extension {
     enable() {
         this._settings = this.getSettings();
+        this._signalIds = [];
 
         this._indicator = new Indicator(this);
         Main.panel.addToStatusArea(this.uuid, this._indicator);
@@ -25,23 +27,42 @@ export default class OneExtension extends Extension {
         this._roundedCorners = new RoundedCorners(this._settings);
         this._roundedCorners.enable();
 
+        if (this._settings.get_boolean('system-monitor-enabled')) {
+            this._startSystemMonitor();
+        }
+
+        this._signalIds.push(
+            this._settings.connect('changed::system-monitor-enabled', () => {
+                if (this._settings.get_boolean('system-monitor-enabled')) {
+                    this._startSystemMonitor();
+                } else {
+                    this._stopSystemMonitor();
+                }
+            })
+        );
+
         if (this._settings.get_boolean('stopwatch-enabled')) {
             this._startStopwatch();
         }
 
-        this._settings.connect('changed::stopwatch-enabled', () => {
-            if (this._settings.get_boolean('stopwatch-enabled')) {
-                this._startStopwatch();
-            } else {
-                this._stopStopwatch();
-            }
-        });
-
-        this._indicator.setupSettings();
+        this._signalIds.push(
+            this._settings.connect('changed::stopwatch-enabled', () => {
+                if (this._settings.get_boolean('stopwatch-enabled')) {
+                    this._startStopwatch();
+                } else {
+                    this._stopStopwatch();
+                }
+            })
+        );
     }
 
     disable() {
         this._stopStopwatch();
+        this._stopSystemMonitor();
+
+        for (const id of this._signalIds)
+            this._settings.disconnect(id);
+        this._signalIds = [];
 
         this._roundedCorners?.disable();
         this._roundedCorners = null;
@@ -58,14 +79,28 @@ export default class OneExtension extends Extension {
     _startStopwatch() {
         if (this._stopwatch) return;
         this._stopwatch = new Stopwatch();
-        this._stopwatch.enable();
         this._indicator.setupStopwatch(this._stopwatch);
     }
 
     _stopStopwatch() {
         if (!this._stopwatch) return;
+        this._indicator.teardownStopwatch();
         this._stopwatch.disable();
         this._stopwatch.destroy();
         this._stopwatch = null;
+    }
+
+    _startSystemMonitor() {
+        if (this._systemMonitor) return;
+        this._systemMonitor = new SystemMonitor(this._settings);
+        this._systemMonitor.enable();
+        this._indicator.setupSystemMonitor(this._systemMonitor);
+    }
+
+    _stopSystemMonitor() {
+        if (!this._systemMonitor) return;
+        this._indicator.teardownSystemMonitor();
+        this._systemMonitor.disable();
+        this._systemMonitor = null;
     }
 }

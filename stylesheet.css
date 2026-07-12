@@ -72,8 +72,30 @@
 }
 
 /* ==========================================================================
- * Scrollbox
+ * System Monitor
  * ========================================================================== */
-.one-extension-scrollbox > StScrollBar {
-    padding-left: 6px;
+.system-monitor-indicators {
+    spacing: 24px;
+    padding: 8px 16px;
+}
+
+.circular-indicator {
+    border-radius: 50%;
+}
+
+.system-monitor-label {
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.system-monitor-value {
+    font-size: 9px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.circular-indicator-icon {
+    icon-size: 16px;
+    -st-icon-style: symbolic;
 }

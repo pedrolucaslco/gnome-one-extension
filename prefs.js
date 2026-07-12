@@ -93,6 +93,22 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             description: _("Show the stopwatch in the panel menu."),
             settingKey: 'stopwatch-enabled'
         });
+
+        const smGroup = new Adw.PreferencesGroup({ title: _("System Monitor") });
+        page.add(smGroup);
+
+        this._addSwitch(smGroup, settings, {
+            title: _("Enable System Monitor"),
+            description: _("Show CPU, RAM and Disk indicators in the panel menu."),
+            settingKey: 'system-monitor-enabled'
+        });
+
+        this._addNumericInput(smGroup, settings, {
+            title: _("Update Interval (seconds)"),
+            description: _("How often to refresh system data."),
+            settingKey: 'system-monitor-interval',
+            range: { lower: 1, upper: 30 }
+        });
     }
 
     _addSwitch(group, settings, { title, description, settingKey }) {

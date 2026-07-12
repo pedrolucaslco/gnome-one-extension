@@ -61,5 +61,15 @@
       <summary>Enable Stopwatch</summary>
       <description>Show the stopwatch in the panel menu.</description>
     </key>
+    <key name="system-monitor-enabled" type="b">
+      <default>true</default>
+      <summary>Enable System Monitor</summary>
+      <description>Show CPU, RAM and disk indicators in the panel menu.</description>
+    </key>
+    <key name="system-monitor-interval" type="i">
+      <default>3</default>
+      <summary>Update Interval (seconds)</summary>
+      <description>How often to update system monitor readings.</description>
+    </key>
   </schema>
 </schemalist>
