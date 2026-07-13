@@ -71,5 +71,10 @@
       <summary>Update Interval (seconds)</summary>
       <description>How often to update system monitor readings.</description>
     </key>
+    <key name="ram-indicator-enabled" type="b">
+      <default>false</default>
+      <summary>Enable RAM Indicator</summary>
+      <description>Show RAM usage in the top panel.</description>
+    </key>
   </schema>
 </schemalist>

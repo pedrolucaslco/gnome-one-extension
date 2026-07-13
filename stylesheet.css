@@ -1,12 +1,8 @@
 /* ==========================================================================
- * One Extension - Adapted from cronomix dark.css
+ * One Extension
  *
- * Variables:
- * blue          #3584e4
- * padding       8px
- * spacing       8px
- * border-radius 10px
- * light_bg      rgba(255, 255, 255, .08)
+ * Colors use rgba() with white base for GNOME Shell dark theme.
+ * For light mode support, use stylesheet-dark.css / stylesheet-light.css.
  * ========================================================================== */
 
 /* ==========================================================================
@@ -30,12 +26,12 @@
     padding: 6px;
     font-weight: bold;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, .08);
+    background-color: rgba(255, 255, 255, 0.08);
 }
 
 .one-extension-button:focus,
 .one-extension-button:hover {
-    background-color: rgba(255, 255, 255, .2);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .one-extension-button StLabel {
@@ -81,18 +77,19 @@
 
 .circular-indicator {
     border-radius: 50%;
+    -indicator-background-color: rgba(255, 255, 255, 0.12);
 }
 
 .system-monitor-label {
-    font-size: 10px;
+    /*font-size: 10px;*/
     font-weight: bold;
     text-align: center;
 }
 
 .system-monitor-value {
-    font-size: 9px;
+    /*font-size: 9px;*/
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    /*color: rgba(255, 255, 255, 0.6);*/
 }
 
 .circular-indicator-icon {

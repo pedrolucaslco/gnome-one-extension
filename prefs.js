@@ -1,4 +1,5 @@
 import Adw from 'gi://Adw';
+import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
@@ -6,189 +7,180 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
 
-        const page = new Adw.PreferencesPage();
-        window.add(page);
+        const generalPage = new Adw.PreferencesPage({
+            title: _('General'),
+            icon_name: 'emblem-system-symbolic',
+        });
+        window.add(generalPage);
 
-        const mainGroup = new Adw.PreferencesGroup();
-        page.add(mainGroup);
+        const mainGroup = new Adw.PreferencesGroup({ title: _('Window centering') });
+        generalPage.add(mainGroup);
 
-        this._addSwitch(mainGroup, settings, {
-            title: _("Change Position"),
-            description: _("When using the shortcut, the window will be centered on the screen."),
-            settingKey: 'change-position'
+        this._addSwitchRow(mainGroup, settings, {
+            title: _('Change position'),
+            description: _('When using the shortcut, the window will be centered on the screen.'),
+            settingKey: 'change-position',
         });
 
-        this._addSwitch(mainGroup, settings, {
-            title: _("Change Size"),
-            description: _("When using the shortcut, the size of the window will be adjusted."),
-            settingKey: 'change-size'
+        this._addSwitchRow(mainGroup, settings, {
+            title: _('Change size'),
+            description: _('When using the shortcut, the size of the window will be adjusted.'),
+            settingKey: 'change-size',
         });
 
-        this._addSwitch(mainGroup, settings, {
-            title: _("Allow Forced Resize"),
-            description: _("Allows forced resizing even if the window is maximized."),
-            settingKey: 'allow-forced-resize'
+        this._addSwitchRow(mainGroup, settings, {
+            title: _('Allow forced resize'),
+            description: _('Allows forced resizing even if the window is maximized.'),
+            settingKey: 'allow-forced-resize',
         });
 
-        this._addNumericInput(mainGroup, settings, {
-            title: _("Percentage Width"),
-            description: _("Portion of the screen width the window will occupy."),
+        this._addSpinRow(mainGroup, settings, {
+            title: _('Percentage width'),
+            description: _('Portion of the screen width the window will occupy.'),
             settingKey: 'frame-width',
-            range: { lower: 1, upper: 100 }
+            lower: 1,
+            upper: 100,
         });
 
-        this._addNumericInput(mainGroup, settings, {
-            title: _("Percentage Height"),
-            description: _("Portion of the screen height the window will occupy."),
+        this._addSpinRow(mainGroup, settings, {
+            title: _('Percentage height'),
+            description: _('Portion of the screen height the window will occupy.'),
             settingKey: 'frame-height',
-            range: { lower: 1, upper: 100 }
+            lower: 1,
+            upper: 100,
         });
 
         this._addKeybindingEntry(mainGroup, settings, {
-            title: _("Shortcut"),
-            description: _("Key combination to center and resize the window."),
-            settingKey: 'centering-keybinding'
+            title: _('Shortcut'),
+            description: _('Key combination to center and resize the window.'),
+            settingKey: 'centering-keybinding',
         });
 
-        const rcGroup = new Adw.PreferencesGroup({ title: _("Rounded Corners") });
-        page.add(rcGroup);
+        const rcPage = new Adw.PreferencesPage({
+            title: _('Rounded Corners'),
+            icon_name: 'window-new-symbolic',
+        });
+        window.add(rcPage);
 
-        this._addSwitch(rcGroup, settings, {
-            title: _("Enable Rounded Corners"),
-            description: _("Apply rounded corners to windows."),
-            settingKey: 'rounded-corners-enabled'
+        const rcGroup = new Adw.PreferencesGroup({ title: _('Rounded corners') });
+        rcPage.add(rcGroup);
+
+        this._addSwitchRow(rcGroup, settings, {
+            title: _('Enable rounded corners'),
+            description: _('Apply rounded corners to windows.'),
+            settingKey: 'rounded-corners-enabled',
         });
 
-        this._addNumericInput(rcGroup, settings, {
-            title: _("Corner Radius"),
-            description: _("Radius of the rounded corners in pixels."),
+        this._addSpinRow(rcGroup, settings, {
+            title: _('Corner radius'),
+            description: _('Radius of the rounded corners in pixels.'),
             settingKey: 'rounded-corners-radius',
-            range: { lower: 1, upper: 100 }
+            lower: 1,
+            upper: 100,
         });
 
-        this._addFloatInput(rcGroup, settings, {
-            title: _("Smoothing"),
-            description: _("Corner shape (0 = circle, 1 = squircle)."),
+        this._addFloatRow(rcGroup, settings, {
+            title: _('Smoothing'),
+            description: _('Corner shape (0 = circle, 1 = squircle).'),
             settingKey: 'rounded-corners-smoothing',
-            range: { lower: 0.0, upper: 1.0 }
+            lower: 0.0,
+            upper: 1.0,
         });
 
-        this._addSwitch(rcGroup, settings, {
-            title: _("Skip Libadwaita Apps"),
-            description: _("Do not apply rounded corners to libadwaita apps."),
-            settingKey: 'skip-libadwaita'
+        this._addSwitchRow(rcGroup, settings, {
+            title: _('Skip libadwaita apps'),
+            description: _('Do not apply rounded corners to libadwaita apps.'),
+            settingKey: 'skip-libadwaita',
         });
 
-        this._addSwitch(rcGroup, settings, {
-            title: _("Skip Libhandy Apps"),
-            description: _("Do not apply rounded corners to libhandy apps."),
-            settingKey: 'skip-libhandy'
+        this._addSwitchRow(rcGroup, settings, {
+            title: _('Skip libhandy apps'),
+            description: _('Do not apply rounded corners to libhandy apps.'),
+            settingKey: 'skip-libhandy',
         });
 
-        const swGroup = new Adw.PreferencesGroup({ title: _("Stopwatch") });
-        page.add(swGroup);
+        const swPage = new Adw.PreferencesPage({
+            title: _('Stopwatch'),
+            icon_name: 'alarm-symbolic',
+        });
+        window.add(swPage);
 
-        this._addSwitch(swGroup, settings, {
-            title: _("Enable Stopwatch"),
-            description: _("Show the stopwatch in the panel menu."),
-            settingKey: 'stopwatch-enabled'
+        const swGroup = new Adw.PreferencesGroup({ title: _('Stopwatch') });
+        swPage.add(swGroup);
+
+        this._addSwitchRow(swGroup, settings, {
+            title: _('Enable stopwatch'),
+            description: _('Show the stopwatch in the panel menu.'),
+            settingKey: 'stopwatch-enabled',
         });
 
-        const smGroup = new Adw.PreferencesGroup({ title: _("System Monitor") });
-        page.add(smGroup);
+        const smPage = new Adw.PreferencesPage({
+            title: _('System Monitor'),
+            icon_name: 'utilities-system-monitor-symbolic',
+        });
+        window.add(smPage);
 
-        this._addSwitch(smGroup, settings, {
-            title: _("Enable System Monitor"),
-            description: _("Show CPU, RAM and Disk indicators in the panel menu."),
-            settingKey: 'system-monitor-enabled'
+        const smGroup = new Adw.PreferencesGroup({ title: _('System monitor') });
+        smPage.add(smGroup);
+
+        this._addSwitchRow(smGroup, settings, {
+            title: _('Enable system monitor'),
+            description: _('Show CPU, RAM and Disk indicators in the panel menu.'),
+            settingKey: 'system-monitor-enabled',
         });
 
-        this._addNumericInput(smGroup, settings, {
-            title: _("Update Interval (seconds)"),
-            description: _("How often to refresh system data."),
+        this._addSwitchRow(smGroup, settings, {
+            title: _('Show RAM in top panel'),
+            description: _('Display RAM usage as a separate indicator in the top bar.'),
+            settingKey: 'ram-indicator-enabled',
+        });
+
+        this._addSpinRow(smGroup, settings, {
+            title: _('Update interval'),
+            description: _('How often to refresh system data, in seconds.'),
             settingKey: 'system-monitor-interval',
-            range: { lower: 1, upper: 30 }
+            lower: 1,
+            upper: 30,
         });
     }
 
-    _addSwitch(group, settings, { title, description, settingKey }) {
-        const row = new Adw.ActionRow({
-            title,
-            subtitle: description
-        });
-        const switchWidget = new Gtk.Switch({
-            active: settings.get_boolean(settingKey),
-            valign: Gtk.Align.CENTER
-        });
-
-        switchWidget.connect('notify::active', (widget) => {
-            settings.set_boolean(settingKey, widget.active);
-        });
-
-        row.add_suffix(switchWidget);
-        row.activatable_widget = switchWidget;
+    _addSwitchRow(group, settings, { title, description, settingKey }) {
+        const row = new Adw.SwitchRow({ title, subtitle: description });
+        settings.bind(settingKey, row, 'active', Gio.SettingsBindFlags.DEFAULT);
         group.add(row);
     }
 
-    _addNumericInput(group, settings, { title, description, settingKey, range }) {
-        const row = new Adw.ActionRow({
-            title,
-            subtitle: description
-        });
-
-        const spinButton = new Gtk.SpinButton({
-            adjustment: new Gtk.Adjustment({
-                lower: range.lower,
-                upper: range.upper,
-                step_increment: 1,
-                value: settings.get_int(settingKey)
-            }),
-            numeric: true,
-            valign: Gtk.Align.CENTER,
-            width_chars: 4
-        });
-
-        spinButton.connect('value-changed', (widget) => {
-            settings.set_int(settingKey, widget.get_value());
-        });
-
-        row.add_suffix(spinButton);
+    _addSpinRow(group, settings, { title, description, settingKey, lower, upper }) {
+        const row = Adw.SpinRow.new_with_range(lower, upper, 1);
+        row.set_title(title);
+        row.set_subtitle(description);
+        settings.bind(settingKey, row, 'value', Gio.SettingsBindFlags.DEFAULT);
         group.add(row);
     }
 
-    _addFloatInput(group, settings, { title, description, settingKey, range }) {
-        const row = new Adw.ActionRow({
-            title,
-            subtitle: description
-        });
+    _addFloatRow(group, settings, { title, description, settingKey, lower, upper }) {
+        const row = new Adw.ActionRow({ title, subtitle: description });
 
         const spinButton = new Gtk.SpinButton({
             adjustment: new Gtk.Adjustment({
-                lower: range.lower,
-                upper: range.upper,
+                lower,
+                upper,
                 step_increment: 0.1,
                 page_increment: 0.1,
-                value: settings.get_double(settingKey)
+                value: settings.get_double(settingKey),
             }),
             digits: 1,
             numeric: true,
             valign: Gtk.Align.CENTER,
-            width_chars: 4
         });
 
-        spinButton.connect('value-changed', (widget) => {
-            settings.set_double(settingKey, widget.get_value());
-        });
-
+        settings.bind(settingKey, spinButton, 'value', Gio.SettingsBindFlags.DEFAULT);
         row.add_suffix(spinButton);
         group.add(row);
     }
 
     _addKeybindingEntry(group, settings, { title, description, settingKey }) {
-        const row = new Adw.ActionRow({
-            title,
-            subtitle: description
-        });
+        const row = new Adw.ActionRow({ title, subtitle: description });
         const storedKeybinding = settings.get_strv(settingKey)[0] || '';
         const displayKeybinding = this._formatToDisplayFormat(storedKeybinding);
 
@@ -200,8 +192,13 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
         keybindingEntry.connect('changed', (entry) => {
             const text = entry.get_text();
             if (this._isValidKeybinding(text)) {
+                row.remove_css_class('error');
+                row.set_tooltip_text('');
                 const formattedKeys = this._formatToStoredFormat(text);
                 settings.set_strv(settingKey, [formattedKeys]);
+            } else {
+                row.add_css_class('error');
+                row.set_tooltip_text(_('Use format: Ctrl+Alt+Key'));
             }
         });
 

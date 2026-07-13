@@ -7,6 +7,7 @@ import { Indicator } from './lib/indicator.js';
 import { RoundedCorners } from './lib/roundedCorners.js';
 import { Stopwatch } from './lib/stopwatch.js';
 import { SystemMonitor } from './lib/systemMonitor.js';
+import { RamIndicator } from './lib/ramIndicator.js';
 
 export default class OneExtension extends Extension {
     enable() {
@@ -54,11 +55,26 @@ export default class OneExtension extends Extension {
                 }
             })
         );
+
+        if (this._settings.get_boolean('ram-indicator-enabled')) {
+            this._startRamIndicator();
+        }
+
+        this._signalIds.push(
+            this._settings.connect('changed::ram-indicator-enabled', () => {
+                if (this._settings.get_boolean('ram-indicator-enabled')) {
+                    this._startRamIndicator();
+                } else {
+                    this._stopRamIndicator();
+                }
+            })
+        );
     }
 
     disable() {
         this._stopStopwatch();
         this._stopSystemMonitor();
+        this._stopRamIndicator();
 
         for (const id of this._signalIds)
             this._settings.disconnect(id);
@@ -102,5 +118,17 @@ export default class OneExtension extends Extension {
         this._indicator.teardownSystemMonitor();
         this._systemMonitor.disable();
         this._systemMonitor = null;
+    }
+
+    _startRamIndicator() {
+        if (this._ramIndicator) return;
+        this._ramIndicator = new RamIndicator(this._settings, this.path);
+        Main.panel.addToStatusArea(`${this.uuid}-ram`, this._ramIndicator, 0);
+    }
+
+    _stopRamIndicator() {
+        if (!this._ramIndicator) return;
+        this._ramIndicator.destroy();
+        this._ramIndicator = null;
     }
 }

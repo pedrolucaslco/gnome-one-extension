@@ -104,6 +104,26 @@ Cada modulo:
 - Uma classe com `constructor(settings)` e metodos `enable()`/`disable()`
 - `export default` da classe
 
+## Restrições Importantes
+
+### Panel Indicator — NÃO MEXER na estrutura do BoxLayout
+
+`lib/indicator.js` usa um `St.BoxLayout` (`_panelBox`) como filho único do `PanelMenu.Button`, contendo o ícone e o label do stopwatch.
+
+**NUNCA** adicionar filhos diretos ao `PanelMenu.Button` via `this.add_child()`. Sempre adicionar widgets dentro do `_panelBox`.
+
+Motivo: `PanelMenu.Button` estende `St.Button`, que espera um único filho. Múltiplos filhos diretos quebram o layout do painel.
+
+```js
+// CORRETO — sempre adicionar ao box
+this._panelBox.add_child(novoWidget);
+
+// ERRADO — não fazer isso
+this.add_child(novoWidget);
+```
+
+**Perguntar ao usuário antes de alterar essa estrutura.**
+
 ## Como Adicionar um Novo Modulo
 
 1. Criar `lib/nomeModulo.js` com a classe do modulo
