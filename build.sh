@@ -31,12 +31,10 @@ CRITICAL_FILES=(
 
 # ─── Parse de flags ──────────────────────────────────────────────────
 FLAG_CLEAN=false
-FLAG_RESTART=false
 
 for arg in "$@"; do
     case "$arg" in
         --clean)     FLAG_CLEAN=true ;;
-        --restart)   FLAG_RESTART=true ;;
         --uninstall)
             echo "Desinstalando extensão..."
             if [ -d "$DEST_DIR" ]; then
@@ -70,7 +68,6 @@ for arg in "$@"; do
             echo ""
             echo "Opções:"
             echo "  --clean      Limpa o diretório antes de instalar"
-            echo "  --restart    Reinicia GNOME Shell após instalar"
             echo "  --uninstall  Remove a extensão completamente"
             echo "  --status     Mostra estado da extensão"
             echo "  --help       Mostra esta ajuda"
@@ -171,11 +168,4 @@ fi
 echo ""
 echo -e "${GREEN}${BOLD}Extensão instalada com sucesso!${RESET}"
 echo ""
-if [ "$FLAG_RESTART" = true ]; then
-    echo "Reiniciando GNOME Shell..."
-    killall -3 gnome-shell 2>/dev/null || true
-    echo "GNOME Shell reiniciado."
-else
-    echo "Execute: $0 --restart"
-    echo "Ou ative/desative pelo Extensions app."
-fi
+echo "Ative/desative pelo Extensions app."
