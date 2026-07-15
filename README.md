@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/pedrolucaslco/gnome-one-extension/releases"><img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="Version"/></a>
+  <a href="https://github.com/pedrolucaslco/gnome-one-extension/releases"><img src="https://img.shields.io/badge/version-1.7.1-blue?style=flat-square" alt="Version"/></a>
   <a href="https://github.com/pedrolucaslco/gnome-one-extension/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-GPL--2.0-green?style=flat-square" alt="License"/></a>
   <a href="https://extensions.gnome.org/"><img src="https://img.shields.io/badge/GNOME%20Shell-45%20|%2046%20|%2047%20|%2048%20|%2050-purple?style=flat-square" alt="GNOME Shell"/></a>
 </p>
@@ -21,11 +21,10 @@
 | Módulo | Descrição | Status |
 |--------|-----------|--------|
 | **Window Centering** | Centraliza e redimensiona janelas com atalho | ✅ `v1.0.0` |
-| **Rounded Corners** | Arredondamento de cantos com shader GLSL | ✅ `v1.1.0` |
 | **Stopwatch** | Cronômetro com interface no painel | ✅ `v1.2.0` |
 | **System Monitor** | Indicadores de CPU, RAM e Disco | ✅ `v1.3.0` |
+| **RAM Indicator** | Indicador de RAM na top bar com lista de processos | ✅ `v1.7.0` |
 | Clipboard History | Histórico de clipboard | 🔜 Planejado |
-| RAM Monitor (bar) | Monitor de memória RAM em barra | 🔜 Planejado |
 | Tiling Manager | Gerenciador de janelas | 🔜 Planejado |
 
 ## Window Centering
@@ -102,25 +101,28 @@ gnome-one-extension/
     ├── indicator.js         # Ícone na top bar + menu
     ├── keybindingManager.js # Gerenciamento de atalhos
     ├── windowCentering.js   # Módulo: centralização
-    ├── roundedCorners.js    # Módulo: arredondamento de cantos
-    ├── roundedCornersEffect.js # Shader GLSL de arredondamento
     ├── stopwatch.js         # Módulo: cronômetro
     ├── systemMonitor.js     # Módulo: monitor de sistema (CPU/RAM/Disk)
+    ├── ramIndicator.js      # Módulo: indicador de RAM na top bar
+    ├── processes.js         # Leitura de processos /proc
+    ├── memInfo.js           # Utilitário compartilhado: leitura de /proc/meminfo
+    ├── windowTracker.js     # Mapeamento de janelas por PID
     ├── icons/               # Ícones SVG customizados
     ├── utils/
     │   ├── button.js        # Componente Button/ButtonBox
     │   ├── circularIndicator.js # Widget de indicador circular
     │   └── pubsub.js        # Sistema de eventos PubSub
     └── views/
-        └── stopwatchView.js # View do cronômetro
+        ├── stopwatchView.js    # View do cronômetro
+        └── processListView.js  # Lista de processos
 ```
 
 ## Roadmap
 
 - [x] Window Centering (v1.0.0)
-- [x] Rounded Corners (v1.1.0)
 - [x] Stopwatch (v1.2.0)
 - [x] System Monitor (v1.3.0)
+- [x] RAM Indicator (v1.7.0)
 - [ ] Clipboard History
 - [ ] Tiling Manager
 

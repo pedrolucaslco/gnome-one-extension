@@ -2,17 +2,6 @@
 
 ## Código Open Source Utilizado
 
-### Rounded Windows (Nathanaelrc/rounded-windows)
-- **Licença:** GPL-3.0
-- **URL:** https://github.com/Nathanaelrc/rounded-windows
-- **Funções adaptadas:**
-
-| Conceito Original | Nosso Arquivo | Descrição |
-|---|---|---|
-| Squircle GLSL shader | `lib/roundedCornersEffect.js` | Shader de arredondamento |
-| Bounds computation | `lib/roundedCorners.js` | Cálculo de bordas |
-| Skip libadwaita/libhandy | `lib/roundedCorners.js` | Detecção de app type |
-
 ### Cronomix (zagortenay333/cronomix)
 - **Licença:** MIT
 - **URL:** https://github.com/zagortenay333/cronomix
@@ -57,7 +46,6 @@
 - **URL:** https://coffeebreak.software/one-menu/
 - **Funcionalidades alvo:**
   - Window Manager — ✅ implementado (v1.0.0)
-  - Rounded Corners — ✅ implementado (v1.1.0)
   - Clipboard History — 🔜 planejado
   - System Monitoring — ✅ implementado (v1.3.0)
   - Disk Clean — 🔜 planejado

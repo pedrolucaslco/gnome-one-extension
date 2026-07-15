@@ -90,7 +90,6 @@ Para light mode no futuro, usar `stylesheet-dark.css` / `stylesheet-light.css`.
 **Resolvido:** Todos os títulos de grupo e switches agora usam sentence case:
 - `"Window centering"` (não "Window Centering")
 - `"Enable stopwatch"` (não "Enable Stopwatch")
-- `"Rounded corners"` (não "Rounded Corners")
 
 **Arquivo:** `prefs.js` — todos os grupos e rows
 

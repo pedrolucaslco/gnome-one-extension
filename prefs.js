@@ -56,49 +56,6 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             settingKey: 'centering-keybinding',
         });
 
-        const rcPage = new Adw.PreferencesPage({
-            title: _('Rounded Corners'),
-            icon_name: 'window-new-symbolic',
-        });
-        window.add(rcPage);
-
-        const rcGroup = new Adw.PreferencesGroup({ title: _('Rounded corners') });
-        rcPage.add(rcGroup);
-
-        this._addSwitchRow(rcGroup, settings, {
-            title: _('Enable rounded corners'),
-            description: _('Apply rounded corners to windows.'),
-            settingKey: 'rounded-corners-enabled',
-        });
-
-        this._addSpinRow(rcGroup, settings, {
-            title: _('Corner radius'),
-            description: _('Radius of the rounded corners in pixels.'),
-            settingKey: 'rounded-corners-radius',
-            lower: 1,
-            upper: 100,
-        });
-
-        this._addFloatRow(rcGroup, settings, {
-            title: _('Smoothing'),
-            description: _('Corner shape (0 = circle, 1 = squircle).'),
-            settingKey: 'rounded-corners-smoothing',
-            lower: 0.0,
-            upper: 1.0,
-        });
-
-        this._addSwitchRow(rcGroup, settings, {
-            title: _('Skip libadwaita apps'),
-            description: _('Do not apply rounded corners to libadwaita apps.'),
-            settingKey: 'skip-libadwaita',
-        });
-
-        this._addSwitchRow(rcGroup, settings, {
-            title: _('Skip libhandy apps'),
-            description: _('Do not apply rounded corners to libhandy apps.'),
-            settingKey: 'skip-libhandy',
-        });
-
         const swPage = new Adw.PreferencesPage({
             title: _('Stopwatch'),
             icon_name: 'alarm-symbolic',
@@ -169,27 +126,6 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
         row.set_title(title);
         row.set_subtitle(description);
         settings.bind(settingKey, row, 'value', Gio.SettingsBindFlags.DEFAULT);
-        group.add(row);
-    }
-
-    _addFloatRow(group, settings, { title, description, settingKey, lower, upper }) {
-        const row = new Adw.ActionRow({ title, subtitle: description });
-
-        const spinButton = new Gtk.SpinButton({
-            adjustment: new Gtk.Adjustment({
-                lower,
-                upper,
-                step_increment: 0.1,
-                page_increment: 0.1,
-                value: settings.get_double(settingKey),
-            }),
-            digits: 1,
-            numeric: true,
-            valign: Gtk.Align.CENTER,
-        });
-
-        settings.bind(settingKey, spinButton, 'value', Gio.SettingsBindFlags.DEFAULT);
-        row.add_suffix(spinButton);
         group.add(row);
     }
 

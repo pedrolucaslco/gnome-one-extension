@@ -10,10 +10,10 @@ Múltiplas ferramentas integradas em uma única extensão modular.
 | Versão | Módulo | Status |
 |--------|--------|--------|
 | v1.0.0 | Window Centering | ✅ Implementado |
-| v1.1.0 | Rounded Corners | ✅ Implementado |
 | v1.2.0 | Stopwatch | ✅ Implementado |
+| v1.3.0 | System Monitor | ✅ Implementado |
+| v1.7.0 | RAM Indicator | ✅ Implementado |
 | — | Clipboard History | 🔜 Planejado |
-| — | RAM Monitor | 🔜 Planejado |
 | — | Tiling Manager | 🔜 Planejado |
 
 ## Convenções de Commit
@@ -91,12 +91,21 @@ Historico de versoes mantido no CHANGELOG.md.
 lib/
 ├── keybindingManager.js   # Gerenciamento compartilhado de atalhos
 ├── windowCentering.js     # Modulo: centralizacao de janelas
-├── roundedCorners.js      # Modulo: manager de arredondamento
-├── roundedCornersEffect.js # Modulo: GLSL shader de arredondamento
 ├── stopwatch.js           # Modulo: cronometro
-├── clipboardHistory.js    # (futuro) Modulo: historico de clipboard
-├── ramMonitor.js          # (futuro) Modulo: monitor de RAM
-└── ...
+├── systemMonitor.js       # Modulo: monitor de sistema (CPU/RAM/Disk)
+├── ramIndicator.js        # Modulo: indicador de RAM na top bar
+├── processes.js           # Leitura de processos /proc
+├── memInfo.js             # Utilitario: leitura compartilhada de /proc/meminfo
+├── windowTracker.js       # Mapeamento de janelas por PID
+├── indicator.js           # Painel principal (PanelMenu.Button)
+├── icons/                 # Icones SVG customizados
+├── utils/
+│   ├── button.js          # Componente Button/ButtonBox
+│   ├── circularIndicator.js # Widget de indicador circular
+│   └── pubsub.js          # Sistema de eventos PubSub
+└── views/
+    ├── stopwatchView.js   # View do cronometro
+    └── processListView.js # Lista de processos
 ```
 
 Cada modulo:

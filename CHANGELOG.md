@@ -5,6 +5,38 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.7.0] - 2026-07-15
+
+### Adicionado
+
+- **RAM Indicator**: indicador de uso de RAM na top bar
+  - Exibe porcentagem de RAM na barra de panels
+  - Menu popup com lista de processos agrupados por aplicação
+  - Botão para matar processos com confirmação
+  - Notificação opcional quando RAM excede limiar configurável
+  - Intervalo de atualização compartilhado com System Monitor
+
+### Removido
+
+- **Rounded Corners**: módulo removido para simplificar a extensão
+
+### Melhorado
+
+- Extraída função compartilhada `readMemInfo()` para eliminar duplicação de leitura de `/proc/meminfo`
+- Removido código morto (`getWindowsByApp`)
+- Corrigida indentação inconsistente em `windowTracker.js` e `processListView.js`
+
+## [1.3.0] - 2025-07-10
+
+### Adicionado
+
+- **System Monitor**: indicadores de CPU, RAM e Disco no menu do painel
+  - Anéis circulares com cores dinâmicas (verde/amarelo/vermelho)
+  - Leitura de CPU via `/proc/stat`
+  - Leitura de RAM via `/proc/meminfo` (fallback) ou GTop
+  - Leitura de Disco via GTop (fallback: Gio)
+  - Intervalo de atualização configurável
+
 ## [1.2.0] - 2025-07-10
 
 ### Adicionado

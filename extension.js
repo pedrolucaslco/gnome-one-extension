@@ -4,7 +4,6 @@ import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import { WindowCentering } from './lib/windowCentering.js';
 import { KeybindingManager } from './lib/keybindingManager.js';
 import { Indicator } from './lib/indicator.js';
-import { RoundedCorners } from './lib/roundedCorners.js';
 import { Stopwatch } from './lib/stopwatch.js';
 import { SystemMonitor } from './lib/systemMonitor.js';
 import { RamIndicator } from './lib/ramIndicator.js';
@@ -24,9 +23,6 @@ export default class OneExtension extends Extension {
             'centering-keybinding',
             this._windowCentering.adjustFrame.bind(this._windowCentering)
         );
-
-        this._roundedCorners = new RoundedCorners(this._settings);
-        this._roundedCorners.enable();
 
         if (this._settings.get_boolean('system-monitor-enabled')) {
             this._startSystemMonitor();
@@ -80,9 +76,6 @@ export default class OneExtension extends Extension {
         for (const id of this._signalIds)
             this._settings.disconnect(id);
         this._signalIds = [];
-
-        this._roundedCorners?.disable();
-        this._roundedCorners = null;
 
         this._indicator?.destroy();
         this._indicator = null;
