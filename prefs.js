@@ -135,6 +135,20 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             settingKey: 'ram-indicator-enabled',
         });
 
+        this._addSwitchRow(smGroup, settings, {
+            title: _('Notify on high RAM usage'),
+            description: _('Send a notification when RAM usage exceeds the threshold.'),
+            settingKey: 'ram-indicator-notify',
+        });
+
+        this._addSpinRow(smGroup, settings, {
+            title: _('RAM warning threshold'),
+            description: _('RAM usage percentage that triggers a notification.'),
+            settingKey: 'ram-indicator-threshold',
+            lower: 1,
+            upper: 100,
+        });
+
         this._addSpinRow(smGroup, settings, {
             title: _('Update interval'),
             description: _('How often to refresh system data, in seconds.'),

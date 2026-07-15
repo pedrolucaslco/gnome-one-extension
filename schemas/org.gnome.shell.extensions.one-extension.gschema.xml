@@ -76,5 +76,15 @@
       <summary>Enable RAM Indicator</summary>
       <description>Show RAM usage in the top panel.</description>
     </key>
+    <key name="ram-indicator-notify" type="b">
+      <default>false</default>
+      <summary>Notify on High RAM Usage</summary>
+      <description>Send a notification when RAM usage exceeds the threshold.</description>
+    </key>
+    <key name="ram-indicator-threshold" type="i">
+      <default>85</default>
+      <summary>RAM Warning Threshold</summary>
+      <description>RAM usage percentage that triggers a notification.</description>
+    </key>
   </schema>
 </schemalist>
