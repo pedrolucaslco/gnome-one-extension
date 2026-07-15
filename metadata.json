@@ -4,7 +4,7 @@
     "description": "Extensão GNOME all-in-one com múltiplas ferramentas: centralização de janelas, clipboard, monitor de sistema e mais.",
     "shell-version": ["45", "46", "47", "48", "50"],
     "url": "https://github.com/pedrolucaslco/gnome-one-extension",
-    "version": 6,
-    "version-name": "1.6.1",
+    "version": 7,
+    "version-name": "1.6.2",
     "settings-schema": "org.gnome.shell.extensions.one-extension"
 }
