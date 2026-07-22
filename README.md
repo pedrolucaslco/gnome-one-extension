@@ -1,11 +1,11 @@
-<p align="center">
-  <img src="icon.svg" width="120" alt="One Extension Icon"/>
-</p>
+<h1 align="center">
+  <img src="lib/icons/applications-utilities-symbolic.svg" width="32" valign="middle" alt="One Extension Icon"/>
+  One Extension
+</h1>
 
-<h1 align="center">One Extension</h1>
-
 <p align="center">
-  Extensão GNOME all-in-one com múltiplas ferramentas integradas em uma única extensão modular.
+  An all-in-one GNOME Shell extension that brings a handful of everyday tools together in one place,
+  so you don't need a separate extension for each one.
 </p>
 
 <p align="center">
@@ -16,53 +16,53 @@
 
 ---
 
-## Funcionalidades
+## What's inside
 
-| Módulo | Descrição | Status |
-|--------|-----------|--------|
-| **Window Centering** | Centraliza e redimensiona janelas com atalho | ✅ `v1.0.0` |
-| **Stopwatch** | Cronômetro com interface no painel | ✅ `v1.2.0` |
-| **System Monitor** | Indicadores de CPU, RAM e Disco | ✅ `v1.3.0` |
-| **RAM Indicator** | Indicador de RAM na top bar com lista de processos | ✅ `v1.7.0` |
-| Clipboard History | Histórico de clipboard | 🔜 Planejado |
-| Tiling Manager | Gerenciador de janelas | 🔜 Planejado |
+### 🪟 Window Centering
 
-## Window Centering
+Never manually drag a window into place again. One keyboard shortcut (`Alt+Shift+A` by default) centers your
+focused window and resizes it to a comfortable percentage of your screen — great for reading, writing, or
+just tidying up your desktop. Works across multiple monitors, and every part of it — the shortcut, whether it
+moves, resizes, or both, and how much of the screen it should take up — is configurable.
 
-Centraliza e redimensiona a janela focada com um único atalho de teclado.
+### ⏱️ Stopwatch
 
-**Atalho padrão:** `Alt+Shift+A`
+A stopwatch that lives in your top bar. Start it from the panel menu and the running time stays visible right
+next to the icon, so you always know it's ticking without needing to open anything or keep a browser tab
+around just to time something.
 
-- Centralizar janela na tela
-- Redimensionar para porcentagem da resolução
-- Suporte a múltiplos monitores
-- Forçar resize em janelas maximizadas (opcional)
-- Atalho totalmente configurável
+### 📊 System Monitor
 
-### Configurações
+CPU, RAM, and Disk usage at a glance, right in the panel dropdown — styled with your GNOME accent color so it
+always matches your system, not a hardcoded theme. Click the RAM ring to see which apps are using memory and
+quit them on the spot, without opening a separate system monitor.
 
-| Configuração | Padrão | Descrição |
-|---|---|---|
-| Change Position | ✅ | Centralizar a janela na tela |
-| Change Size | ✅ | Redimensionar a janela |
-| Allow Forced Resize | ❌ | Permitir resize em janela maximizada |
-| Width | 86% | Largura da janela (% da tela) |
-| Height | 90% | Altura da janela (% da tela) |
+---
 
-## Instalação
+## Design
 
-### Dependências
+One Extension is built to feel like it belongs in GNOME Shell — not bolted on. It follows the
+[GNOME Human Interface Guidelines](https://developer.gnome.org/hig/) for layout, iconography, color, and
+interaction patterns, and reuses GNOME's own native controls and theming wherever possible instead of custom
+widgets.
 
-- GNOME Shell 45, 46, 47, 48 ou 50
+## Installation
+
+### Dependencies
+
+- GNOME Shell 45, 46, 47, 48 or 50
 - `glib-compile-schemas`
 
-### Via repositório (recomendado)
+### Via repository (recommended)
 
 ```bash
 git clone https://github.com/pedrolucaslco/gnome-one-extension.git
 cd gnome-one-extension
-./build.sh
+./install.sh
 ```
+
+`install.sh` copies the extension into `~/.local/share/gnome-shell/extensions/`, compiles the GSettings
+schema, and enables it — no extra setup needed.
 
 ### Manual
 
@@ -72,73 +72,48 @@ gnome-extensions install one-extension@pedrolucaslco
 gnome-extensions enable one-extension@pedrolucaslco
 ```
 
-## Desenvolvimento
+### Updating / uninstalling
 
 ```bash
-# Instalar/atualizar extensão
-./build.sh
+./install.sh              # re-run any time to update after a git pull
+./install.sh --status     # check whether it's installed/enabled
+./install.sh --uninstall  # disable and remove
+```
 
-# Reiniciar GNOME Shell (fecha apps abertos)
-./build.sh --restart
+GNOME Shell only picks up code changes after the extension is reloaded — on X11 that's
+`killall -3 gnome-shell`, on Wayland you'll need to log out and back in.
 
-# Ver logs em tempo real
+## Development
+
+```bash
+# Launch a nested GNOME Shell with the extension installed, for quick iteration
+./dev.sh
+
+# Watch live logs
 journalctl -f -o cat /usr/bin/gnome-shell
 ```
 
-### Estrutura do Projeto
-
-```
-gnome-one-extension/
-├── extension.js            # Entry point
-├── prefs.js                # UI de preferências (Adw/Gtk)
-├── metadata.json           # Metadados da extensão
-├── stylesheet.css          # Estilos CSS
-├── build.sh                # Script de instalação
-├── dev.sh                  # Script de desenvolvimento (nested)
-├── schemas/
-│   └── *.gschema.xml       # Configurações GSettings
-└── lib/
-    ├── indicator.js         # Ícone na top bar + menu
-    ├── keybindingManager.js # Gerenciamento de atalhos
-    ├── windowCentering.js   # Módulo: centralização
-    ├── stopwatch.js         # Módulo: cronômetro
-    ├── systemMonitor.js     # Módulo: monitor de sistema (CPU/RAM/Disk)
-    ├── ramIndicator.js      # Módulo: indicador de RAM na top bar
-    ├── processes.js         # Leitura de processos /proc
-    ├── memInfo.js           # Utilitário compartilhado: leitura de /proc/meminfo
-    ├── windowTracker.js     # Mapeamento de janelas por PID
-    ├── icons/               # Ícones SVG customizados
-    ├── utils/
-    │   ├── button.js        # Componente Button/ButtonBox
-    │   ├── circularIndicator.js # Widget de indicador circular
-    │   └── pubsub.js        # Sistema de eventos PubSub
-    └── views/
-        ├── stopwatchView.js    # View do cronômetro
-        └── processListView.js  # Lista de processos
-```
-
-## Roadmap
-
-- [x] Window Centering (v1.0.0)
-- [x] Stopwatch (v1.2.0)
-- [x] System Monitor (v1.3.0)
-- [x] RAM Indicator (v1.7.0)
-- [ ] Clipboard History
-- [ ] Tiling Manager
-
 ## Changelog
 
-Consulte [CHANGELOG.md](CHANGELOG.md) para o histórico de versões.
+See [CHANGELOG.md](CHANGELOG.md) for the version history.
 
-## Licença
+## License
 
-Este projeto está licenciado sob a licença GPL-2.0 — consulte o arquivo [LICENSE](LICENSE) para detalhes.
+This project is licensed under the GPL-2.0 license — see the [LICENSE](LICENSE) file for details.
 
-## Créditos
+## Credits
 
-Desenvolvido por [pedrolucaslco](https://github.com/pedrolucaslco)
+Developed by [pedrolucaslco](https://github.com/pedrolucaslco)
 
-Inspirado no [OneMenu](https://coffeebreak.software/one-menu/) para macOS.
-Código base: [window-centering](https://github.com/niam0t/window-centering) (GPL-2.0).
+This project draws on concept, usability, and functionality inspiration from other open source projects:
 
-Consulte [CREDITS.md](CREDITS.md) para detalhes completos das referências open source utilizadas.
+**Concept**
+- [OneMenu](https://coffeebreak.software/one-menu/) (Coffeebreak Software) — product inspiration for macOS: all-in-one extension with Window Manager, System Monitoring, Clipboard History and Disk Clean.
+
+**Functionality**
+- [Cronomix](https://github.com/zagortenay333/cronomix) (MIT) — stopwatch logic (`lib/stopwatch.js`): RUNNING/PAUSED/RESET state machine and time formatting.
+- [window-centering](https://github.com/niam0t/window-centering) (GPL-2.0) — base for the window centering module (`lib/windowCentering.js`), the shortcut manager (`lib/keybindingManager.js`), and the initial structure of the GSettings schema and preferences UI.
+
+**Usability**
+- [GNOME Shell Extension Reference](https://github.com/julio641742/gnome-shell-extension-reference) (julio641742) — `PanelMenu.Button` + `PopupMenu` pattern used in the top bar indicator.
+- [GJS Guide](https://gjs.guide/extensions/) — ESModule pattern (GNOME 45+), `PopupMenu` API, and overall architecture (Clutter, St, PanelMenu).

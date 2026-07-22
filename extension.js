@@ -6,7 +6,6 @@ import { KeybindingManager } from './lib/keybindingManager.js';
 import { Indicator } from './lib/indicator.js';
 import { Stopwatch } from './lib/stopwatch.js';
 import { SystemMonitor } from './lib/systemMonitor.js';
-import { RamIndicator } from './lib/ramIndicator.js';
 
 export default class OneExtension extends Extension {
     enable() {
@@ -14,7 +13,18 @@ export default class OneExtension extends Extension {
         this._signalIds = [];
 
         this._indicator = new Indicator(this);
-        Main.panel.addToStatusArea(this.uuid, this._indicator);
+        Main.panel.addToStatusArea(
+            this.uuid, this._indicator, this._settings.get_int('indicator-position'), 'right'
+        );
+
+        this._signalIds.push(
+            this._settings.connect('changed::indicator-position', () => {
+                Main.panel._rightBox?.set_child_at_index(
+                    this._indicator.container ?? this._indicator,
+                    this._settings.get_int('indicator-position')
+                );
+            })
+        );
 
         this._windowCentering = new WindowCentering(this._settings);
         this._keybindingManager = new KeybindingManager(this._settings);
@@ -51,27 +61,11 @@ export default class OneExtension extends Extension {
                 }
             })
         );
-
-        if (this._settings.get_boolean('ram-indicator-enabled')) {
-            this._startRamIndicator();
-        }
-
-        this._signalIds.push(
-            this._settings.connect('changed::ram-indicator-enabled', () => {
-                if (this._settings.get_boolean('ram-indicator-enabled')) {
-                    this._startRamIndicator();
-                } else {
-                    this._stopRamIndicator();
-                }
-            })
-        );
-
     }
 
     disable() {
         this._stopStopwatch();
         this._stopSystemMonitor();
-        this._stopRamIndicator();
 
         for (const id of this._signalIds)
             this._settings.disconnect(id);
@@ -112,17 +106,5 @@ export default class OneExtension extends Extension {
         this._indicator.teardownSystemMonitor();
         this._systemMonitor.disable();
         this._systemMonitor = null;
-    }
-
-    _startRamIndicator() {
-        if (this._ramIndicator) return;
-        this._ramIndicator = new RamIndicator(this._settings, this.path);
-        Main.panel.addToStatusArea(`${this.uuid}-ram`, this._ramIndicator, 0);
-    }
-
-    _stopRamIndicator() {
-        if (!this._ramIndicator) return;
-        this._ramIndicator.destroy();
-        this._ramIndicator = null;
     }
 }

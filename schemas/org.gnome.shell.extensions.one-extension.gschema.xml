@@ -31,6 +31,12 @@
       <summary>Center Window Shortcut</summary>
       <description>Key combination to center and resize the window.</description>
     </key>
+    <key name="indicator-position" type="i">
+      <range min="1" max="20"/>
+      <default>1</default>
+      <summary>Indicator Position</summary>
+      <description>Position of the extension's icon within the top bar's right-hand status area. Lower values are closer to the center of the screen, higher values are closer to the system indicators.</description>
+    </key>
     <key name="stopwatch-enabled" type="b">
       <default>true</default>
       <summary>Enable Stopwatch</summary>
@@ -45,11 +51,6 @@
       <default>3</default>
       <summary>Update Interval (seconds)</summary>
       <description>How often to update system monitor readings.</description>
-    </key>
-    <key name="ram-indicator-enabled" type="b">
-      <default>false</default>
-      <summary>Enable RAM Indicator</summary>
-      <description>Show RAM usage in the top panel.</description>
     </key>
     <key name="ram-indicator-notify" type="b">
       <default>false</default>

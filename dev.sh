@@ -4,9 +4,9 @@ set -e
 
 EXTENSION_UUID="one-extension@pedrolucaslco"
 
-# Build e instala a extensão
+# Instala a extensão
 echo "=== Instalando extensão ==="
-"$(dirname "$0")/build.sh"
+"$(dirname "$0")/install.sh"
 
 echo ""
 echo "=== Iniciando GNOME Shell aninhado (Wayland) ==="

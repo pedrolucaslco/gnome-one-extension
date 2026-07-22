@@ -7,11 +7,30 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
 
+        // 'utilities-system-monitor-symbolic' isn't a real icon in Adwaita's
+        // icon theme, so the System Monitor page below used to show a blank
+        // spot in the sidebar. Bundle the actual GNOME System Monitor
+        // symbolic icon with the extension instead of depending on the
+        // gnome-system-monitor package being installed on the user's system.
+        Gtk.IconTheme.get_for_display(window.get_display())
+            .add_search_path(`${this.path}/lib/icons`);
+
         const generalPage = new Adw.PreferencesPage({
             title: _('General'),
             icon_name: 'emblem-system-symbolic',
         });
         window.add(generalPage);
+
+        const indicatorGroup = new Adw.PreferencesGroup({ title: _('Panel indicator') });
+        generalPage.add(indicatorGroup);
+
+        this._addSpinRow(indicatorGroup, settings, {
+            title: _('Position'),
+            description: _('Where the icon sits among the top bar\'s status area. Lower values are closer to the center of the screen, higher values are closer to the system indicators.'),
+            settingKey: 'indicator-position',
+            lower: 1,
+            upper: 20,
+        });
 
         const mainGroup = new Adw.PreferencesGroup({ title: _('Window centering') });
         generalPage.add(mainGroup);
@@ -73,7 +92,7 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
 
         const smPage = new Adw.PreferencesPage({
             title: _('System Monitor'),
-            icon_name: 'utilities-system-monitor-symbolic',
+            icon_name: 'system-monitor-symbolic',
         });
         window.add(smPage);
 
@@ -82,14 +101,8 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
 
         this._addSwitchRow(smGroup, settings, {
             title: _('Enable system monitor'),
-            description: _('Show CPU, RAM and Disk indicators in the panel menu.'),
+            description: _('Show CPU, RAM and Disk indicators in the panel menu. Click the RAM ring to view running processes.'),
             settingKey: 'system-monitor-enabled',
-        });
-
-        this._addSwitchRow(smGroup, settings, {
-            title: _('Show RAM in top panel'),
-            description: _('Display RAM usage as a separate indicator in the top bar.'),
-            settingKey: 'ram-indicator-enabled',
         });
 
         this._addSwitchRow(smGroup, settings, {

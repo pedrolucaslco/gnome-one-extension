@@ -79,16 +79,17 @@
 .circular-indicator {
     border-radius: 50%;
     -indicator-background-color: rgba(255, 255, 255, 0.12);
+    -indicator-color: -st-accent-color;
 }
 
 .system-monitor-label {
-    /*font-size: 10px;*/
+    /*font-size: 0.9em;*/
     font-weight: bold;
     text-align: center;
 }
 
 .system-monitor-value {
-    /*font-size: 9px;*/
+    /*font-size: 0.8em;*/
     text-align: center;
     /*color: rgba(255, 255, 255, 0.6);*/
 }
@@ -96,13 +97,14 @@
 .circular-indicator-icon {
     icon-size: 16px;
     -st-icon-style: symbolic;
+    /*color: rgba(255,255,255,0.9);*/
 }
 
 .system-monitor-abbr {
-    font-size: 8px;
+    font-size: 0.7em;
     font-weight: bold;
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    /*color: rgba(255,255,255,0.9);*/
 }
 
 /* ==========================================================================
@@ -110,70 +112,45 @@
  * ========================================================================== */
 .stopwatch-title {
     font-weight: bold;
-    font-size: 14px;
-    padding: 2px 0;
 }
 
-.stopwatch-icon-button {
-    padding: 4px 8px;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.08);
+.stopwatch-panel-label {
+    font-weight: bold;
 }
 
-.stopwatch-icon-button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.stopwatch-icon-button StIcon {
-    icon-size: 16px;
-    -st-icon-style: symbolic;
-}
-
-.soon-badge {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.5);
-    padding-left: 4px;
-}
+/*
+ * Intentionally no custom background/hover/padding here: `.icon-button`
+ * (applied alongside this class in JS) is a class the active GNOME Shell
+ * theme already styles natively — round shape, em-based padding/icon-size,
+ * theme-adaptive hover/focus colors. Reusing it means this control follows
+ * whatever shell theme (and high-contrast/accessibility text scaling) the
+ * user has active, instead of a fixed rgba() overlay tuned only for the
+ * stock dark theme.
+ */
 
 /* ==========================================================================
  * RAM Process Menu
  * ========================================================================== */
 .ram-process-header {
     font-weight: bold;
-    font-size: 13px;
     padding: 4px 8px;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 1);
 }
 
 .ram-process-app-header {
     font-weight: bold;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.85);
+    /*color: rgba(255, 255, 255, 0.85);*/
 }
 
 .ram-process-app-total {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.5);
+    /*color: rgba(255, 255, 255, 0.5);*/
 }
 
-.ram-process-name {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.ram-process-kill-button {
-    padding: 2px 4px;
-    border-radius: 6px;
-    background-color: transparent;
-}
-
+/* Base shape/padding/theme colors come from the native `.icon-button` class
+ * applied alongside this one in JS; this only adds the destructive-action
+ * red tint on hover, using the official HIG Red 3 (#e01b24) palette color. */
 .ram-process-kill-button:hover {
     background-color: rgba(224, 27, 36, 0.3);
-}
-
-.ram-process-kill-icon {
-    icon-size: 12px;
-    -st-icon-style: symbolic;
 }
 
 .ram-process-separator {
@@ -189,7 +166,6 @@
 }
 
 .ram-process-window-title {
-    font-size: 11px;
     font-style: italic;
     color: rgba(255, 255, 255, 0.65);
 }

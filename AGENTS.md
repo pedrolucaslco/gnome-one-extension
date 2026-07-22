@@ -93,7 +93,6 @@ lib/
 ├── windowCentering.js     # Modulo: centralizacao de janelas
 ├── stopwatch.js           # Modulo: cronometro
 ├── systemMonitor.js       # Modulo: monitor de sistema (CPU/RAM/Disk)
-├── ramIndicator.js        # Modulo: indicador de RAM na top bar
 ├── processes.js           # Leitura de processos /proc
 ├── memInfo.js             # Utilitario: leitura compartilhada de /proc/meminfo
 ├── windowTracker.js       # Mapeamento de janelas por PID
