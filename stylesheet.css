@@ -110,23 +110,78 @@
 /* ==========================================================================
  * Stopwatch
  * ========================================================================== */
+/* Caption-style heading (Typography: "Caption" — small text accompanying
+ * the main content), kept subtle since the big digits are the focus. */
 .stopwatch-title {
+    font-size: 0.85em;
     font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .stopwatch-panel-label {
     font-weight: bold;
 }
 
-/*
- * Intentionally no custom background/hover/padding here: `.icon-button`
- * (applied alongside this class in JS) is a class the active GNOME Shell
- * theme already styles natively — round shape, em-based padding/icon-size,
- * theme-adaptive hover/focus colors. Reusing it means this control follows
- * whatever shell theme (and high-contrast/accessibility text scaling) the
- * user has active, instead of a fixed rgba() overlay tuned only for the
- * stock dark theme.
- */
+.stopwatch-time-box {
+    spacing: 2px;
+    padding: 4px 0 8px 0;
+}
+
+/* Tabular figures so digits don't shift width tick to tick. */
+.stopwatch-time-digits {
+    font-size: 28px;
+    font-weight: bold;
+    font-feature-settings: "tnum";
+}
+
+.stopwatch-time-sep {
+    font-size: 28px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.stopwatch-controls {
+    spacing: 8px;
+}
+
+/* Pill buttons (HIG Buttons: "pill can be used when a text button is
+ * situated in open space, and is a primary action for the view"). Only
+ * the primary button gets a suggested-action-style fill — HIG allows at
+ * most one styled button per view. */
+.stopwatch-button {
+    border-radius: 9999px;
+    padding: 6px 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.stopwatch-button-primary {
+    background-color: #3584e4; /* GNOME palette Blue 3 — suggested-action */
+    color: #ffffff;
+}
+
+.stopwatch-button-primary:hover,
+.stopwatch-button-primary:focus {
+    background-color: #1c71d8; /* Blue 4 */
+}
+
+.stopwatch-button-primary:active {
+    background-color: #1a5fb4; /* Blue 5 */
+}
+
+.stopwatch-button-secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stopwatch-button-secondary:hover,
+.stopwatch-button-secondary:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.stopwatch-button-secondary:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
 
 /* ==========================================================================
  * RAM Process Menu

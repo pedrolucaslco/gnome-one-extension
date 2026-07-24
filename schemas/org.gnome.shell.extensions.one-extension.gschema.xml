@@ -42,6 +42,21 @@
       <summary>Enable Stopwatch</summary>
       <description>Show the stopwatch in the panel menu.</description>
     </key>
+    <key name="stopwatch-state" type="i">
+      <default>2</default>
+      <summary>Stopwatch State</summary>
+      <description>Persisted stopwatch state (0=running, 1=paused, 2=reset), used to survive Shell reloads.</description>
+    </key>
+    <key name="stopwatch-total-ms" type="x">
+      <default>0</default>
+      <summary>Stopwatch Total Milliseconds</summary>
+      <description>Persisted elapsed time checkpoint, used to survive Shell reloads.</description>
+    </key>
+    <key name="stopwatch-running-since" type="x">
+      <default>0</default>
+      <summary>Stopwatch Running Since</summary>
+      <description>Epoch ms of the last save while running; 0 when not running. Used to survive Shell reloads.</description>
+    </key>
     <key name="system-monitor-enabled" type="b">
       <default>true</default>
       <summary>Enable System Monitor</summary>

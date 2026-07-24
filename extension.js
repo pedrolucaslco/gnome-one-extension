@@ -82,7 +82,7 @@ export default class OneExtension extends Extension {
 
     _startStopwatch() {
         if (this._stopwatch) return;
-        this._stopwatch = new Stopwatch();
+        this._stopwatch = new Stopwatch(this._settings);
         this._indicator.setupStopwatch(this._stopwatch);
     }
 
