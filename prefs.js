@@ -178,6 +178,35 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             upper: 8,
         });
 
+        const notifyGroup = new Adw.PreferencesGroup({ title: _('Notifications') });
+        pomodoroPage.add(notifyGroup);
+
+        this._addSwitchRow(notifyGroup, settings, {
+            title: _('Notify on phase change'),
+            description: _('Show a notification when a focus session or break ends.'),
+            settingKey: 'pomodoro-notify-enabled',
+        });
+
+        this._addSwitchRow(notifyGroup, settings, {
+            title: _('Play sound on phase change'),
+            description: _('Play a sound when a focus session or break ends.'),
+            settingKey: 'pomodoro-sound-enabled',
+        });
+
+        this._addSwitchRow(notifyGroup, settings, {
+            title: _('Warn before phase ends'),
+            description: _('Also notify a few minutes before a focus session or break ends.'),
+            settingKey: 'pomodoro-warn-enabled',
+        });
+
+        this._addSpinRow(notifyGroup, settings, {
+            title: _('Warning lead time'),
+            description: _('How many minutes before a phase ends to fire the warning.'),
+            settingKey: 'pomodoro-warn-minutes',
+            lower: 1,
+            upper: 30,
+        });
+
         this._addPomodoroHistoryPage(window);
 
         const initialPage = settings.get_string('prefs-open-page');

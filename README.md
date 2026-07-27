@@ -43,6 +43,8 @@ A focus timer that lives right below the stopwatch in the same panel dropdown. C
 focus, short break, and long break sessions, skip ahead when you need to, and jump straight to its settings
 with the gear icon on the block. Every completed focus session is logged to disk, so your history survives
 Shell reloads and is browsable (with a summary and a "Clear History" option) from the Preferences window.
+A notification and sound play whenever a session ends, and you can optionally get an extra heads-up a few
+minutes before one wraps up — all configurable from Preferences.
 
 ---
 

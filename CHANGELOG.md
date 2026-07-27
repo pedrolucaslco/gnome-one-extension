@@ -9,6 +9,14 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 > git) — eram versões de desenvolvimento/iteração. A `1.0.0` é a primeira release estável oficial da
 > extensão, e o versionamento segue a partir dela.
 
+## [1.2.0] - 2026-07-27
+
+### Adicionado
+
+- Notificação e som ao final de cada sessão de foco ou pausa do Pomodoro (configurável)
+- Aviso opcional alguns minutos antes de uma sessão de foco ou pausa terminar, com o tempo de
+  antecedência configurável
+
 ## [1.1.0] - 2026-07-27
 
 ### Adicionado

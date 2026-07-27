@@ -131,6 +131,27 @@
       <summary>Pomodoro Cycle Count</summary>
       <description>Completed focus sessions since the last long break.</description>
     </key>
+    <key name="pomodoro-notify-enabled" type="b">
+      <default>true</default>
+      <summary>Notify on Phase Change</summary>
+      <description>Show a notification when a focus session or break ends.</description>
+    </key>
+    <key name="pomodoro-sound-enabled" type="b">
+      <default>true</default>
+      <summary>Play Sound on Phase Change</summary>
+      <description>Play a sound when a focus session or break ends.</description>
+    </key>
+    <key name="pomodoro-warn-enabled" type="b">
+      <default>false</default>
+      <summary>Warn Before Phase Ends</summary>
+      <description>Additionally notify a few minutes before a focus session or break ends.</description>
+    </key>
+    <key name="pomodoro-warn-minutes" type="i">
+      <range min="1" max="30"/>
+      <default>1</default>
+      <summary>Warning Lead Time</summary>
+      <description>How many minutes before a phase ends to fire the warning notification.</description>
+    </key>
     <key name="prefs-open-page" type="s">
       <default>''</default>
       <summary>Preferences Initial Page</summary>
