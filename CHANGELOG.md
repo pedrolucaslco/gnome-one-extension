@@ -9,6 +9,15 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 > git) — eram versões de desenvolvimento/iteração. A `1.0.0` é a primeira release estável oficial da
 > extensão, e o versionamento segue a partir dela.
 
+## [1.4.0] - 2026-07-27
+
+### Adicionado
+
+- Novo bloco de containers Docker/Podman no menu do painel, com start/stop/restart, logs e shell —
+  cada container é um item de acordeão nativo do GNOME, com detecção automática dos runtimes instalados
+- Nova aba "Layout" nas preferências para ligar/desligar e reordenar os blocos do painel (Stopwatch,
+  Pomodoro, System Monitor, Containers), com switches e setas cima/baixo, sem precisar reiniciar a Shell
+
 ## [1.2.0] - 2026-07-27
 
 ### Adicionado
