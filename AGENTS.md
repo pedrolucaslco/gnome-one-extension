@@ -13,6 +13,7 @@ Múltiplas ferramentas integradas em uma única extensão modular.
 | v1.2.0 | Stopwatch | ✅ Implementado |
 | v1.3.0 | System Monitor | ✅ Implementado |
 | v1.7.0 | RAM Indicator | ✅ Implementado |
+| — | Pomodoro | ✅ Implementado |
 | — | Clipboard History | 🔜 Planejado |
 | — | Tiling Manager | 🔜 Planejado |
 
@@ -85,6 +86,11 @@ Semântico: `MAJOR.MINOR.PATCH`
 Tags criadas **automaticamente** a cada commit via fluxo de commits.
 Historico de versoes mantido no CHANGELOG.md.
 
+> **Marco `1.0.0`:** o commit `release: official v1` foi definido como a primeira release estavel da
+> extensao. Todas as tags anteriores (`v1.0.0` ate `v1.7.3`) foram renomeadas para `-beta` (ex:
+> `v1.7.3-beta`), e uma nova tag `v1.0.0` foi criada apontando para esse commit. O versionamento semantico
+> segue normalmente a partir da `1.0.0` — nao ha mais reset previsto.
+
 ## Estrutura Modular
 
 ```
@@ -92,6 +98,8 @@ lib/
 ├── keybindingManager.js   # Gerenciamento compartilhado de atalhos
 ├── windowCentering.js     # Modulo: centralizacao de janelas
 ├── stopwatch.js           # Modulo: cronometro
+├── pomodoro.js            # Modulo: pomodoro (foco/pausa/pausa longa)
+├── pomodoroLog.js         # Persistencia do log de pomodoros (JSON em disco)
 ├── systemMonitor.js       # Modulo: monitor de sistema (CPU/RAM/Disk)
 ├── processes.js           # Leitura de processos /proc
 ├── memInfo.js             # Utilitario: leitura compartilhada de /proc/meminfo
@@ -104,6 +112,7 @@ lib/
 │   └── pubsub.js          # Sistema de eventos PubSub
 └── views/
     ├── stopwatchView.js   # View do cronometro
+    ├── pomodoroView.js    # View do pomodoro
     └── processListView.js # Lista de processos
 ```
 

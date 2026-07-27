@@ -2,6 +2,7 @@ import Adw from 'gi://Adw';
 import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import { PomodoroLog } from './lib/pomodoroLog.js';
 
 export default class OneExtensionPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
@@ -126,6 +127,153 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             lower: 1,
             upper: 30,
         });
+
+        const pomodoroPage = new Adw.PreferencesPage({
+            title: _('Pomodoro'),
+            icon_name: 'tomato-symbolic',
+        });
+        window.add(pomodoroPage);
+
+        const pomodoroGroup = new Adw.PreferencesGroup({ title: _('Pomodoro') });
+        pomodoroPage.add(pomodoroGroup);
+
+        this._addSwitchRow(pomodoroGroup, settings, {
+            title: _('Enable pomodoro'),
+            description: _('Show the pomodoro timer in the panel menu.'),
+            settingKey: 'pomodoro-enabled',
+        });
+
+        const durationsGroup = new Adw.PreferencesGroup({ title: _('Durations') });
+        pomodoroPage.add(durationsGroup);
+
+        this._addSpinRow(durationsGroup, settings, {
+            title: _('Focus duration'),
+            description: _('Length of a focus session, in minutes.'),
+            settingKey: 'pomodoro-focus-minutes',
+            lower: 1,
+            upper: 180,
+        });
+
+        this._addSpinRow(durationsGroup, settings, {
+            title: _('Short break duration'),
+            description: _('Length of a short break, in minutes.'),
+            settingKey: 'pomodoro-short-break-minutes',
+            lower: 1,
+            upper: 60,
+        });
+
+        this._addSpinRow(durationsGroup, settings, {
+            title: _('Long break duration'),
+            description: _('Length of a long break, in minutes.'),
+            settingKey: 'pomodoro-long-break-minutes',
+            lower: 1,
+            upper: 60,
+        });
+
+        this._addSpinRow(durationsGroup, settings, {
+            title: _('Cycles before long break'),
+            description: _('Number of completed focus sessions before a long break is offered.'),
+            settingKey: 'pomodoro-cycles-before-long-break',
+            lower: 2,
+            upper: 8,
+        });
+
+        this._addPomodoroHistoryPage(window);
+
+        const initialPage = settings.get_string('prefs-open-page');
+        if (initialPage === 'pomodoro') {
+            window.set_visible_page(pomodoroPage);
+            settings.set_string('prefs-open-page', '');
+        }
+    }
+
+    _addPomodoroHistoryPage(window) {
+        const log = new PomodoroLog();
+
+        const page = new Adw.PreferencesPage({
+            title: _('History'),
+            icon_name: 'document-open-recent-symbolic',
+        });
+        window.add(page);
+
+        const summaryGroup = new Adw.PreferencesGroup({ title: _('Summary') });
+        page.add(summaryGroup);
+
+        const todayRow = new Adw.ActionRow({ title: _('Completed today') });
+        const todayValue = new Gtk.Label({ label: '0' });
+        todayRow.add_suffix(todayValue);
+        summaryGroup.add(todayRow);
+
+        const totalRow = new Adw.ActionRow({ title: _('Completed total') });
+        const totalValue = new Gtk.Label({ label: '0' });
+        totalRow.add_suffix(totalValue);
+        summaryGroup.add(totalRow);
+
+        const listGroup = new Adw.PreferencesGroup({ title: _('Recent sessions') });
+        page.add(listGroup);
+
+        const clearButton = new Gtk.Button({
+            label: _('Clear History'),
+            css_classes: ['destructive-action'],
+            valign: Gtk.Align.CENTER,
+        });
+        listGroup.set_header_suffix(clearButton);
+
+        let rows = [];
+
+        const refresh = () => {
+            todayValue.set_label(String(log.getTodayCount()));
+            totalValue.set_label(String(log.getTotalCount()));
+
+            for (const row of rows)
+                listGroup.remove(row);
+            rows = [];
+
+            const entries = log.getAll().slice().reverse().slice(0, 50);
+
+            if (entries.length === 0) {
+                const emptyRow = new Adw.ActionRow({ title: _('No sessions recorded yet') });
+                listGroup.add(emptyRow);
+                rows.push(emptyRow);
+                return;
+            }
+
+            for (const entry of entries) {
+                const minutes = Math.round(entry.durationMs / 60000);
+                const row = new Adw.ActionRow({
+                    title: new Date(entry.completedAt).toLocaleString(),
+                    subtitle: `${minutes} min`,
+                });
+                listGroup.add(row);
+                rows.push(row);
+            }
+        };
+
+        // Clearing history is permanent and can't be reversed like pausing
+        // or skipping a session can, so — unlike the rest of this
+        // extension's controls — it gets a confirmation dialog.
+        clearButton.connect('clicked', () => {
+            const dialog = new Adw.MessageDialog({
+                heading: _('Clear History?'),
+                body: _('This permanently deletes all recorded pomodoro sessions. This cannot be undone.'),
+                transient_for: window,
+                modal: true,
+            });
+            dialog.add_response('cancel', _('Cancel'));
+            dialog.add_response('clear', _('Clear History'));
+            dialog.set_response_appearance('clear', Adw.ResponseAppearance.DESTRUCTIVE);
+            dialog.set_default_response('cancel');
+            dialog.set_close_response('cancel');
+            dialog.connect('response', (_dlg, response) => {
+                if (response === 'clear') {
+                    log.clear();
+                    refresh();
+                }
+            });
+            dialog.present();
+        });
+
+        refresh();
     }
 
     _addSwitchRow(group, settings, { title, description, settingKey }) {

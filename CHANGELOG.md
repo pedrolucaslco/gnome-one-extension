@@ -9,6 +9,15 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 > git) — eram versões de desenvolvimento/iteração. A `1.0.0` é a primeira release estável oficial da
 > extensão, e o versionamento segue a partir dela.
 
+## [1.1.0] - 2026-07-27
+
+### Adicionado
+
+- Módulo Pomodoro: bloco no popup do painel, logo abaixo do stopwatch, com ciclos configuráveis de
+  foco/pausa curta/pausa longa, botão de atalho direto para a aba de configuração e log persistente
+  (em disco) das sessões de foco concluídas, com página de histórico e opção de limpar nas
+  preferências
+
 ## [1.0.0] - 2026-07-21
 
 Primeira release estável.

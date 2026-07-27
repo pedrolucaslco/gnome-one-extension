@@ -37,6 +37,13 @@ CPU, RAM, and Disk usage at a glance, right in the panel dropdown — styled wit
 always matches your system, not a hardcoded theme. Click the RAM ring to see which apps are using memory and
 quit them on the spot, without opening a separate system monitor.
 
+### 🍅 Pomodoro
+
+A focus timer that lives right below the stopwatch in the same panel dropdown. Cycle through configurable
+focus, short break, and long break sessions, skip ahead when you need to, and jump straight to its settings
+with the gear icon on the block. Every completed focus session is logged to disk, so your history survives
+Shell reloads and is browsable (with a summary and a "Clear History" option) from the Preferences window.
+
 ---
 
 ## Design

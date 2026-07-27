@@ -184,6 +184,56 @@
 }
 
 /* ==========================================================================
+ * Pomodoro
+ * ========================================================================== */
+/* Time digits, separator, and controls reuse the .stopwatch-* classes above
+ * — same pill-button/tabular-digit language, no need to duplicate it. */
+.pomodoro-title {
+    font-size: 0.85em;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomodoro-settings-button {
+    border-radius: 9999px;
+    padding: 4px;
+}
+
+.pomodoro-settings-button:hover,
+.pomodoro-settings-button:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.pomodoro-settings-icon {
+    icon-size: 14px;
+    -st-icon-style: symbolic;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pomodoro-progress-row {
+    spacing: 6px;
+    padding: 0 0 4px 0;
+}
+
+.pomodoro-progress-dot,
+.pomodoro-progress-dot-filled {
+    font-size: 8px;
+}
+
+.pomodoro-progress-dot {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.pomodoro-progress-dot-filled {
+    color: #3584e4; /* GNOME palette Blue 3, matches .stopwatch-button-primary */
+}
+
+.pomodoro-caption {
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
  * RAM Process Menu
  * ========================================================================== */
 .ram-process-header {

@@ -5,6 +5,7 @@ import { WindowCentering } from './lib/windowCentering.js';
 import { KeybindingManager } from './lib/keybindingManager.js';
 import { Indicator } from './lib/indicator.js';
 import { Stopwatch } from './lib/stopwatch.js';
+import { Pomodoro } from './lib/pomodoro.js';
 import { SystemMonitor } from './lib/systemMonitor.js';
 
 export default class OneExtension extends Extension {
@@ -61,10 +62,25 @@ export default class OneExtension extends Extension {
                 }
             })
         );
+
+        if (this._settings.get_boolean('pomodoro-enabled')) {
+            this._startPomodoro();
+        }
+
+        this._signalIds.push(
+            this._settings.connect('changed::pomodoro-enabled', () => {
+                if (this._settings.get_boolean('pomodoro-enabled')) {
+                    this._startPomodoro();
+                } else {
+                    this._stopPomodoro();
+                }
+            })
+        );
     }
 
     disable() {
         this._stopStopwatch();
+        this._stopPomodoro();
         this._stopSystemMonitor();
 
         for (const id of this._signalIds)
@@ -92,6 +108,20 @@ export default class OneExtension extends Extension {
         this._stopwatch.disable();
         this._stopwatch.destroy();
         this._stopwatch = null;
+    }
+
+    _startPomodoro() {
+        if (this._pomodoro) return;
+        this._pomodoro = new Pomodoro(this._settings);
+        this._indicator.setupPomodoro(this._pomodoro);
+    }
+
+    _stopPomodoro() {
+        if (!this._pomodoro) return;
+        this._indicator.teardownPomodoro();
+        this._pomodoro.disable();
+        this._pomodoro.destroy();
+        this._pomodoro = null;
     }
 
     _startSystemMonitor() {
