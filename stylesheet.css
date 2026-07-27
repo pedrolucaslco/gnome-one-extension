@@ -274,3 +274,20 @@
     font-style: italic;
     color: rgba(255, 255, 255, 0.65);
 }
+
+/* ==========================================================================
+ * Containers
+ *
+ * Each container is a real PopupSubMenuMenuItem (GNOME's standard accordion
+ * menu item, same component the system menu uses) plus PopupMenuItem rows
+ * for its actions — the same building blocks as the "Settings" item above.
+ * Only the leading status icon's color needs a custom rule, since
+ * `.popup-menu-icon` alone doesn't carry one.
+ * ========================================================================== */
+.container-icon-running {
+    color: #33d17a; /* GNOME palette Green 3 */
+}
+
+.container-icon-stopped {
+    color: rgba(255, 255, 255, 0.4);
+}

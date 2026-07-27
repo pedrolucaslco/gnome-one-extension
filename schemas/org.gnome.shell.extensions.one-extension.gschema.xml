@@ -157,5 +157,21 @@
       <summary>Preferences Initial Page</summary>
       <description>Internal hint used by the panel menu to open the Preferences window directly on a specific page. Reset to empty after use.</description>
     </key>
+    <key name="containers-enabled" type="b">
+      <default>true</default>
+      <summary>Enable Containers</summary>
+      <description>Show the Docker/Podman container list in the panel menu.</description>
+    </key>
+    <key name="containers-refresh-interval" type="i">
+      <range min="2" max="60"/>
+      <default>5</default>
+      <summary>Containers Refresh Interval</summary>
+      <description>How often to refresh the container list, in seconds.</description>
+    </key>
+    <key name="panel-blocks-order" type="as">
+      <default><![CDATA[['stopwatch', 'pomodoro', 'system-monitor', 'containers']]]></default>
+      <summary>Panel Blocks Order</summary>
+      <description>Order in which the optional module blocks (stopwatch, pomodoro, system monitor, containers) appear in the panel menu.</description>
+    </key>
   </schema>
 </schemalist>

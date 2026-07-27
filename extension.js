@@ -76,12 +76,27 @@ export default class OneExtension extends Extension {
                 }
             })
         );
+
+        if (this._settings.get_boolean('containers-enabled')) {
+            this._startContainers();
+        }
+
+        this._signalIds.push(
+            this._settings.connect('changed::containers-enabled', () => {
+                if (this._settings.get_boolean('containers-enabled')) {
+                    this._startContainers();
+                } else {
+                    this._stopContainers();
+                }
+            })
+        );
     }
 
     disable() {
         this._stopStopwatch();
         this._stopPomodoro();
         this._stopSystemMonitor();
+        this._stopContainers();
 
         for (const id of this._signalIds)
             this._settings.disconnect(id);
@@ -122,6 +137,18 @@ export default class OneExtension extends Extension {
         this._pomodoro.disable();
         this._pomodoro.destroy();
         this._pomodoro = null;
+    }
+
+    _startContainers() {
+        if (this._containersStarted) return;
+        this._containersStarted = true;
+        this._indicator.setupContainers(this._settings);
+    }
+
+    _stopContainers() {
+        if (!this._containersStarted) return;
+        this._containersStarted = false;
+        this._indicator.teardownContainers();
     }
 
     _startSystemMonitor() {

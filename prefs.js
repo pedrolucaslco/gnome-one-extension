@@ -76,6 +76,8 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             settingKey: 'centering-keybinding',
         });
 
+        this._addLayoutPage(window, settings);
+
         const swPage = new Adw.PreferencesPage({
             title: _('Stopwatch'),
             icon_name: 'alarm-symbolic',
@@ -207,6 +209,29 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
             upper: 30,
         });
 
+        const containersPage = new Adw.PreferencesPage({
+            title: _('Containers'),
+            icon_name: 'utilities-terminal-symbolic',
+        });
+        window.add(containersPage);
+
+        const containersGroup = new Adw.PreferencesGroup({ title: _('Containers') });
+        containersPage.add(containersGroup);
+
+        this._addSwitchRow(containersGroup, settings, {
+            title: _('Enable containers'),
+            description: _('Show a Docker/Podman container list in the panel menu, with start, stop, restart, logs and shell actions.'),
+            settingKey: 'containers-enabled',
+        });
+
+        this._addSpinRow(containersGroup, settings, {
+            title: _('Refresh interval'),
+            description: _('How often to refresh the container list, in seconds.'),
+            settingKey: 'containers-refresh-interval',
+            lower: 2,
+            upper: 60,
+        });
+
         this._addPomodoroHistoryPage(window);
 
         const initialPage = settings.get_string('prefs-open-page');
@@ -303,6 +328,96 @@ export default class OneExtensionPreferences extends ExtensionPreferences {
         });
 
         refresh();
+    }
+
+    // Lets the panel menu's block order (stopwatch/pomodoro/system monitor/
+    // containers) be changed from Preferences instead of hardcoded in
+    // indicator.js. Up/Down buttons rather than drag-and-drop — the HIG's
+    // reordering guidance treats button-based moving as required for
+    // keyboard/screen-reader accessibility, drag handles alone aren't enough.
+    _addLayoutPage(window, settings) {
+        const page = new Adw.PreferencesPage({
+            title: _('Layout'),
+            icon_name: 'view-list-symbolic',
+        });
+        window.add(page);
+
+        const group = new Adw.PreferencesGroup({
+            title: _('Panel blocks'),
+            description: _('Turn blocks on or off, and use the arrows to change the order they appear in the panel menu.'),
+        });
+        page.add(group);
+
+        this._layoutBlocks = [
+            { key: 'stopwatch', title: _('Stopwatch'), icon: 'alarm-symbolic', settingKey: 'stopwatch-enabled' },
+            { key: 'pomodoro', title: _('Pomodoro'), icon: 'tomato-symbolic', settingKey: 'pomodoro-enabled' },
+            { key: 'system-monitor', title: _('System Monitor'), icon: 'system-monitor-symbolic', settingKey: 'system-monitor-enabled' },
+            { key: 'containers', title: _('Containers'), icon: 'utilities-terminal-symbolic', settingKey: 'containers-enabled' },
+        ];
+        this._layoutGroup = group;
+        this._layoutSettings = settings;
+        this._layoutRows = [];
+
+        this._rebuildLayoutRows();
+    }
+
+    _getLayoutOrder() {
+        const allKeys = this._layoutBlocks.map(b => b.key);
+        const saved = this._layoutSettings.get_strv('panel-blocks-order').filter(k => allKeys.includes(k));
+        return [...saved, ...allKeys.filter(k => !saved.includes(k))];
+    }
+
+    _rebuildLayoutRows() {
+        for (const row of this._layoutRows)
+            this._layoutGroup.remove(row);
+        this._layoutRows = [];
+
+        const order = this._getLayoutOrder();
+        const blockByKey = new Map(this._layoutBlocks.map(b => [b.key, b]));
+
+        order.forEach((key, index) => {
+            const block = blockByKey.get(key);
+            if (!block)
+                return;
+
+            const row = new Adw.ActionRow({ title: block.title });
+            row.add_prefix(new Gtk.Image({ icon_name: block.icon }));
+
+            const toggle = new Gtk.Switch({ valign: Gtk.Align.CENTER });
+            this._layoutSettings.bind(block.settingKey, toggle, 'active', Gio.SettingsBindFlags.DEFAULT);
+            row.add_suffix(toggle);
+
+            const moveBox = new Gtk.Box({ css_classes: ['linked'], valign: Gtk.Align.CENTER });
+
+            const upButton = new Gtk.Button({ icon_name: 'go-up-symbolic', css_classes: ['flat'] });
+            upButton.set_tooltip_text(_('Move Up'));
+            upButton.set_sensitive(index > 0);
+            upButton.connect('clicked', () => this._moveLayoutBlock(order, index, -1));
+            moveBox.append(upButton);
+
+            const downButton = new Gtk.Button({ icon_name: 'go-down-symbolic', css_classes: ['flat'] });
+            downButton.set_tooltip_text(_('Move Down'));
+            downButton.set_sensitive(index < order.length - 1);
+            downButton.connect('clicked', () => this._moveLayoutBlock(order, index, 1));
+            moveBox.append(downButton);
+
+            row.add_suffix(moveBox);
+
+            this._layoutGroup.add(row);
+            this._layoutRows.push(row);
+        });
+    }
+
+    _moveLayoutBlock(order, index, delta) {
+        const newIndex = index + delta;
+        if (newIndex < 0 || newIndex >= order.length)
+            return;
+
+        const newOrder = [...order];
+        [newOrder[index], newOrder[newIndex]] = [newOrder[newIndex], newOrder[index]];
+        this._layoutSettings.set_strv('panel-blocks-order', newOrder);
+
+        this._rebuildLayoutRows();
     }
 
     _addSwitchRow(group, settings, { title, description, settingKey }) {

@@ -14,6 +14,7 @@ Múltiplas ferramentas integradas em uma única extensão modular.
 | v1.3.0 | System Monitor | ✅ Implementado |
 | v1.7.0 | RAM Indicator | ✅ Implementado |
 | — | Pomodoro | ✅ Implementado |
+| — | Containers (Docker/Podman) | ✅ Implementado |
 | — | Clipboard History | 🔜 Planejado |
 | — | Tiling Manager | 🔜 Planejado |
 
@@ -104,6 +105,7 @@ lib/
 ├── processes.js           # Leitura de processos /proc
 ├── memInfo.js             # Utilitario: leitura compartilhada de /proc/meminfo
 ├── windowTracker.js       # Mapeamento de janelas por PID
+├── containers.js          # Utilitario: listagem/acoes docker+podman (async, via Gio.Subprocess)
 ├── indicator.js           # Painel principal (PanelMenu.Button)
 ├── icons/                 # Icones SVG customizados
 ├── utils/
@@ -113,13 +115,40 @@ lib/
 └── views/
     ├── stopwatchView.js   # View do cronometro
     ├── pomodoroView.js    # View do pomodoro
-    └── processListView.js # Lista de processos
+    ├── processListView.js # Lista de processos
+    └── containersView.js  # Lista de containers docker/podman com acoes
 ```
+
+## Modulo Containers (Docker/Podman)
+
+`lib/containers.js` segue o mesmo padrao de `lib/processes.js`: funcoes utilitarias sem classe/estado,
+sem `enable()`/`disable()` proprio. `ContainersView` (`lib/views/containersView.js`) e' auto-contida — tem
+seu proprio timer de refresh (`containers-refresh-interval`), igual `ProcessListView`, entao nao ha um
+modulo com PubSub por tras. `extension.js` so alterna a visibilidade via `indicator.setupContainers()` /
+`teardownContainers()` quando `containers-enabled` muda.
+
+Acoes de start/stop/restart chamam `docker`/`podman` via `Gio.Subprocess` assincrono. Log e shell abrem um
+terminal externo detectado no sistema (`ptyxis` > `gnome-terminal` > `konsole` > `xterm`, o que existir)
+rodando `<runtime> logs -f` / `<runtime> exec -it <id> bash` — a extensao roda no processo do Shell, que
+nao tem um emulador de terminal proprio pra hospedar um PTY interativo.
 
 Cada modulo:
 - Um arquivo em `lib/nomeModulo.js`
 - Uma classe com `constructor(settings)` e metodos `enable()`/`disable()`
 - `export default` da classe
+
+## Ordem dos Blocos no Painel (reordenavel)
+
+A ordem visual dos blocos opcionais (stopwatch, pomodoro, system-monitor, containers) no menu do
+`Indicator` **nao e' fixa no codigo** — vem da chave `panel-blocks-order` (`as`) no schema, configuravel na
+aba "Layout" das Preferencias (switch liga/desliga + setas cima/baixo por bloco, sem drag-and-drop — o HIG
+exige controles por botao para acessibilidade via teclado/leitor de tela).
+
+`indicator.js#_applyBlockOrder()` le essa chave e reposiciona os itens do menu via `PopupMenuBase.
+moveMenuItem()` (API nativa do `popupMenu.js`), reagindo a `changed::panel-blocks-order` em tempo real —
+nao precisa reiniciar a Shell. `_getBlockItems(key)` mapeia cada chave de bloco pro(s) item(ns) de menu
+correspondente(s) — System Monitor sao dois slots (`_monitorSlot` + `_processSlot`) que sempre se movem
+juntos, adjacentes.
 
 ## Restrições Importantes
 
@@ -148,6 +177,9 @@ this.add_child(novoWidget);
 3. Compilar schemas: `glib-compile-schemas schemas/`
 4. Importar e instanciar em `extension.js` (enable/disable)
 5. Adicionar UI de configuracao em `prefs.js`
+5b. Se o bloco aparece no menu do painel: registrar sua chave em `indicator.js#_getBlockItems()` +
+    `allKeys`/default de `panel-blocks-order` no schema, e adicionar uma entrada em `_layoutBlocks` na aba
+    "Layout" do `prefs.js` — senao o bloco nao aparece na tela de reordenacao.
 6. Incrementar `version` no `metadata.json`
 7. Documentar no `README.md`
 8. Criar commit com `feat: add [nome] module`

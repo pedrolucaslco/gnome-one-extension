@@ -46,6 +46,19 @@ Shell reloads and is browsable (with a summary and a "Clear History" option) fro
 A notification and sound play whenever a session ends, and you can optionally get an extra heads-up a few
 minutes before one wraps up — all configurable from Preferences.
 
+### 🐳 Containers
+
+A live list of your Docker and Podman containers, right in the panel dropdown — no need to switch to a
+terminal to check what's running. Each container shows its status at a glance, with one-click start, stop,
+and restart, plus buttons to stream its logs or drop into a shell inside it (opened in your system terminal).
+Detects whichever runtime(s) you have installed automatically.
+
+### 🧩 Layout
+
+Every block above is optional and reorderable. The **Layout** page in Preferences lists them with a switch
+to turn each on or off, and Up/Down buttons to change the order they appear in the panel dropdown — no
+drag-and-drop required, so it works the same with a mouse, keyboard, or screen reader.
+
 ---
 
 ## Design
